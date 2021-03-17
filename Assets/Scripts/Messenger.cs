@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
  
 static internal class Messenger 
 {
@@ -321,10 +322,20 @@ public sealed class PreserveMessenger : MonoBehaviour {
 	{
 		DontDestroyOnLoad(gameObject);	
 	}
- 
-	//Clean up eventTable every time a new level loads.
-	public void OnDisable() 
-	{
-		Messenger.Cleanup();
-	}
+
+    void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene)
+    {
+        //Clean up eventTable every time a new level loads.
+        Messenger.Cleanup();
+    }
 }
