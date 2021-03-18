@@ -9,8 +9,13 @@ public class PlayerInteractScript : MonoBehaviour
     public Camera _camera;
     public float highlightEffectScale;
     public float highlightEffectDuration;
+    public GameObject grabPoint;
+    public GameObject pointerIndicator;
+    public float distance;
+    public Vector3 pointerViewportPoint;
 
     private InteractableScript highlighted;
+    private HoldableScript holding;
 
     // Start is called before the first frame update
     void Start()
@@ -21,31 +26,84 @@ public class PlayerInteractScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out hit, Mathf.Infinity, interactableLayer))
+        UpdateHighlighted();
+        UpdateHolding();
+
+        pointerIndicator.SetActive(holding == null);
+    }
+
+    private void UpdateHighlighted()
+    {
+        if (!holding)
         {
-            InteractableScript interactable = hit.collider.gameObject.GetComponent<InteractableScript>();
-            if (interactable)
+            Vector3 pointerInWorld = _camera.ViewportToWorldPoint(pointerViewportPoint);
+            RaycastHit hit;
+            /**
+             * manually check distance instead of limiting the distance of the raycast because
+             * we want to highlight the object if the closest point on the hit object is within 
+             * the distance range even if the actual hit point of the ray cast is out of the range
+             * 
+             * for performance we will limit the raycast range to an arbitrary value beyond the
+             * distance range as long as this limit is large enough such that if the closest point
+             * on a grabbable object is within the distance then all points on that object should
+             * be within the raycast range
+             */
+            if (Physics.Raycast(_camera.ViewportPointToRay(pointerViewportPoint), out hit, distance + 5, interactableLayer) &&
+                Vector3.Distance(hit.collider.ClosestPoint(pointerInWorld), pointerInWorld) <= distance)
             {
-                if (interactable != highlighted)
+                InteractableScript interactable = hit.collider.gameObject.GetComponent<InteractableScript>();
+                if (interactable)
                 {
-                    if (highlighted && highlighted.shrinkCoroutine == null)
+                    if (interactable != highlighted)
                     {
-                        UnHighlight(highlighted);
-                        highlighted = null;
+                        if (highlighted && highlighted.shrinkCoroutine == null)
+                        {
+                            UnHighlight(highlighted);
+                            highlighted = null;
+                        }
+                        Highlight(interactable);
+                        highlighted = interactable;
                     }
-                    Highlight(interactable);
-                    highlighted = interactable;
                 }
             }
-        } 
-        else
-        {
-            if (highlighted && highlighted.shrinkCoroutine == null)
+            else
             {
-                UnHighlight(highlighted);
-                highlighted = null;
+                if (highlighted && highlighted.shrinkCoroutine == null)
+                {
+                    UnHighlight(highlighted);
+                    highlighted = null;
+                }
             }
+        }
+    }
+
+    private void UpdateHolding()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (holding)
+            {
+                if (holding.Release())
+                {
+                    holding = null;
+                }
+            }
+            else
+            {
+                if (highlighted)
+                {
+                    holding = highlighted.gameObject.GetComponent<HoldableScript>();
+                    if (holding)
+                    {
+                        Vector3 offset = holding.GetComponent<Collider>().ClosestPoint(_camera.ViewportToWorldPoint(pointerViewportPoint));
+                        holding.Grab(grabPoint, offset);
+                    }
+                }
+            }
+        }
+        if (holding)
+        {
+            //holding.transform.position = grabPoint.transform.position;
         }
     }
 
