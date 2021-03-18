@@ -13,9 +13,11 @@ public class PlayerInteractScript : MonoBehaviour
     public GameObject pointerIndicator;
     public float distance;
     public Vector3 pointerViewportPoint;
+    public float clickTimeout;
 
     private InteractableScript highlighted;
     private HoldableScript holding;
+    private float lastClickAndGrabTime;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +30,6 @@ public class PlayerInteractScript : MonoBehaviour
     {
         UpdateHighlighted();
         UpdateHolding();
-
-        pointerIndicator.SetActive(holding == null);
     }
 
     private void UpdateHighlighted()
@@ -83,11 +83,11 @@ public class PlayerInteractScript : MonoBehaviour
         {
             if (holding)
             {
-                if (holding.Release())
+                if (Time.time - lastClickAndGrabTime > clickTimeout)
                 {
-                    holding = null;
+                    ReleaseHolding();
                 }
-            }
+            } 
             else
             {
                 if (highlighted)
@@ -97,13 +97,28 @@ public class PlayerInteractScript : MonoBehaviour
                     {
                         Vector3 offset = holding.GetComponent<Collider>().ClosestPoint(_camera.ViewportToWorldPoint(pointerViewportPoint));
                         holding.Grab(grabPoint, offset);
+                        pointerIndicator.SetActive(false);
+                        lastClickAndGrabTime = Time.time;
                     }
                 }
             }
         }
-        if (holding)
+        if (Input.GetMouseButtonUp(0))
         {
-            //holding.transform.position = grabPoint.transform.position;
+            if (holding && Time.time - lastClickAndGrabTime > clickTimeout)
+            {
+                ReleaseHolding();
+            }
+            lastClickAndGrabTime = 0;
+        }   
+    }
+
+    public void ReleaseHolding()
+    {
+        if (holding.Release())
+        {
+            holding = null;
+            pointerIndicator.SetActive(true);
         }
     }
 

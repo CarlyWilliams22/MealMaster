@@ -2360,6 +2360,7 @@ MonoBehaviour:
   pointerIndicator: {fileID: 1369723331}
   distance: 1
   pointerViewportPoint: {x: 0.5, y: 0.5, z: 0}
+  clickTimeout: 0.5
 --- !u!1 &2069623814
 GameObject:
   m_ObjectHideFlags: 0
