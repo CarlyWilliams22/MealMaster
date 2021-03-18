@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseManager : MonoBehaviour
+public class PauseManagerScript : MonoBehaviour
 {
     PlayerLookScript playerLookScript;
     private bool isPaused;
