@@ -52,7 +52,7 @@ public class PlayerInteractScript : MonoBehaviour
                 Vector3.Distance(hit.collider.ClosestPoint(pointerInWorld), pointerInWorld) <= distance)
             {
                 InteractableScript interactable = hit.collider.gameObject.GetComponent<InteractableScript>();
-                if (interactable)
+                if (interactable && interactable.interactionEnabled)
                 {
                     if (interactable != highlighted)
                     {

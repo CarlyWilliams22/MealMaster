@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preEffectScale: {x: 0, y: 0, z: 0}
+  interactionEnabled: 1
 --- !u!65 &3099591
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2020,6 +2021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preEffectScale: {x: 0, y: 0, z: 0}
+  interactionEnabled: 1
 --- !u!65 &1721365623
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class InteractableScript : MonoBehaviour
     public IEnumerator growCoroutine;
     public IEnumerator shrinkCoroutine;
     public Vector3 preEffectScale;
+    public bool interactionEnabled;
 
     // Start is called before the first frame update
     void Start()
