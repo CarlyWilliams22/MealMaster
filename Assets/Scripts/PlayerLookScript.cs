@@ -13,6 +13,7 @@ public class PlayerLookScript : MonoBehaviour
 
     private float yAngle = 0;
     private float mouseSensitivity;
+    private bool isEnabled;
 
     private void Start()
     {
@@ -21,23 +22,39 @@ public class PlayerLookScript : MonoBehaviour
 
     void Update()
     {
-        float sensitivity = Mathf.Lerp(sensitivityMin, sensitivityMax, mouseSensitivity);
-        transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * sensitivity, 0));
-        yAngle -= Input.GetAxis("Mouse Y") * sensitivity;
-        yAngle = Mathf.Clamp(yAngle, yClampMin, yClampMax);
-        head.transform.localEulerAngles = new Vector3(yAngle, 0, 0);
+        if (isEnabled)
+        {
+            float sensitivity = Mathf.Lerp(sensitivityMin, sensitivityMax, mouseSensitivity);
+            transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * sensitivity, 0));
+            yAngle -= Input.GetAxis("Mouse Y") * sensitivity;
+            yAngle = Mathf.Clamp(yAngle, yClampMin, yClampMax);
+            head.transform.localEulerAngles = new Vector3(yAngle, 0, 0);
+        }
+    }
+
+    /**
+     * Enable/disable whether mouse input moves the player head
+     * 
+     * Allows for pause menu to disable look movement while the game is pause
+     * but still keep this script enabled to it can receive the CHANGED_MOUSE_SENSITIVITY
+     * event if the player changes that value from the pause menu
+     */
+    public void SetLookEnabled(bool enabled)
+    {
+        isEnabled = enabled;
+        Cursor.lockState = enabled ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     private void OnEnable()
     {
         Messenger.AddListener<float>(GameEvent.CHANGED_MOUSE_SENSITIVITY, OnChangeMouseSensitivity);
-        Cursor.lockState = CursorLockMode.Locked;
+        SetLookEnabled(true);
     }
 
     private void OnDisable()
     {
         Messenger.RemoveListener<float>(GameEvent.CHANGED_MOUSE_SENSITIVITY, OnChangeMouseSensitivity);
-        Cursor.lockState = CursorLockMode.None;
+        SetLookEnabled(false);
     }
 
     private void OnChangeMouseSensitivity(float value)
