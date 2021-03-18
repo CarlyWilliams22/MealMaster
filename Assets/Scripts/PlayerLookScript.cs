@@ -36,7 +36,7 @@ public class PlayerLookScript : MonoBehaviour
      * Enable/disable whether mouse input moves the player head
      * 
      * Allows for pause menu to disable look movement while the game is pause
-     * but still keep this script enabled to it can receive the CHANGED_MOUSE_SENSITIVITY
+     * but still keep this script enabled so it can receive the CHANGED_MOUSE_SENSITIVITY
      * event if the player changes that value from the pause menu
      */
     public void SetLookEnabled(bool enabled)
