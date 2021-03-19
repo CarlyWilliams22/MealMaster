@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts;
 
 public class BankAccountScript : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class BankAccountScript : MonoBehaviour
             return;
         }
         _instance = this;
+    }
+
+    private void Start()
+    {
+        balanceAtLevelStart = Prefs.GetCash();
+        currentBalance = balanceAtLevelStart;
+        Messenger.Broadcast(GameEvent.CHANGED_CASH, currentBalance);
     }
 
     public float GetProfit()
