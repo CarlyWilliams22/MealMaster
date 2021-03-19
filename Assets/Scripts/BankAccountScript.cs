@@ -7,6 +7,25 @@ public class BankAccountScript : MonoBehaviour
     public float currentBalance;
     public float balanceAtLevelStart;
 
+    private static BankAccountScript _instance = null;
+
+    public static BankAccountScript Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        _instance = this;
+    }
 
     public float GetProfit()
     {

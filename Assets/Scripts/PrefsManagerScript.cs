@@ -5,12 +5,6 @@ using Assets.Scripts;
 
 public class PrefsManagerScript : MonoBehaviour
 {
-    private BankAccountScript bankAccount;
-
-    private void Start()
-    {
-        bankAccount = FindObjectOfType<BankAccountScript>();
-    }
     private void OnEnable()
     {
         Messenger.AddListener<float>(GameEvent.CHANGED_MOUSE_SENSITIVITY, OnChangeMouseSensitivity);
@@ -32,7 +26,7 @@ public class PrefsManagerScript : MonoBehaviour
     {
         if (win)
         {
-            Prefs.SetCash(bankAccount.currentBalance);
+            Prefs.SetCash(BankAccountScript.Instance.currentBalance);
         }
     }
 }
