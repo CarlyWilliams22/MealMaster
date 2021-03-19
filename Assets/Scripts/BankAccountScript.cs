@@ -21,11 +21,13 @@ public class BankAccountScript : MonoBehaviour
     public void CreditAccount(float credit)
     {
         currentBalance += credit;
+        Messenger.Broadcast(GameEvent.CHANGED_CASH, currentBalance);
     }
 
     public void WithdrawFromAccount(float withdrawal)
     {
         currentBalance -= withdrawal;
+        Messenger.Broadcast(GameEvent.CHANGED_CASH, currentBalance);
     }
 
 }
