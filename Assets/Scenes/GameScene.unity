@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 3099591}
   - component: {fileID: 3099590}
   - component: {fileID: 3099595}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: InteractableCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2016,7 +2016,7 @@ GameObject:
   - component: {fileID: 1721365623}
   - component: {fileID: 1721365622}
   - component: {fileID: 1721365627}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: InteractableCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   _camera: {fileID: 0}
   highlightEffectScale: 1.2
   highlightEffectDuration: 0.2
