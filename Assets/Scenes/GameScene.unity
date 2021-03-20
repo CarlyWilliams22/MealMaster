@@ -2334,7 +2334,7 @@ MonoBehaviour:
   sensitivityMin: 2
   sensitivityMax: 5
   yClampMin: -20
-  yClampMax: 30
+  yClampMax: 40
 --- !u!143 &1972499353
 CharacterController:
   m_ObjectHideFlags: 0
