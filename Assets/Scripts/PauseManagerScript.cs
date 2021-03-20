@@ -56,4 +56,10 @@ public class PauseManagerScript : MonoBehaviour
     {
         SetPaused(false);
     }
+
+    public void OnClickMainMenu()
+    {
+        OnPause(false);
+        FindObjectOfType<ApplicationManagerScript>().OnClickMainMenu();
+    }
 }
