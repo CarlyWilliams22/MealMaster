@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInteractScript : MonoBehaviour
 {
-    public LayerMask interactableLayer;
+    public LayerMask interactableLayerMask;
     public Camera _camera;
     public float highlightEffectScale;
     public float highlightEffectDuration;
@@ -48,8 +48,10 @@ public class PlayerInteractScript : MonoBehaviour
              * on a grabbable object is within the distance then all points on that object should
              * be within the raycast range
              */
-            if (Physics.Raycast(_camera.ViewportPointToRay(pointerViewportPoint), out hit, distance + 5, interactableLayer) &&
-                Vector3.Distance(hit.collider.ClosestPoint(pointerInWorld), pointerInWorld) <= distance)
+            bool hitSuccess = Physics.Raycast(_camera.ViewportPointToRay(pointerViewportPoint), out hit, distance + 5);
+            bool correctLayer = hitSuccess && (interactableLayerMask == (interactableLayerMask | (1 << hit.collider.gameObject.layer)));
+            bool withinDistance = hitSuccess && correctLayer && Vector3.Distance(hit.collider.ClosestPoint(pointerInWorld), pointerInWorld) <= distance;
+            if (withinDistance)
             {
                 InteractableScript interactable = hit.collider.gameObject.GetComponent<InteractableScript>();
                 if (interactable && interactable.interactionEnabled)

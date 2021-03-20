@@ -2382,7 +2382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 909d508792d2f46498ecc4e937716827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableLayer:
+  interactableLayerMask:
     serializedVersion: 2
     m_Bits: 256
   _camera: {fileID: 0}
