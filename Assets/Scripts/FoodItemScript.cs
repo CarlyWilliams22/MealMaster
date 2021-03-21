@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FoodItemScript : MonoBehaviour
 {
@@ -22,17 +23,36 @@ public class FoodItemScript : MonoBehaviour
         { FoodItemType.BURGER, 2.50f }
     };
 
-    // cook durations in seconds
-    public static readonly Dictionary<FoodItemType, float> cookDurations = new Dictionary<FoodItemType, float>
-    {
-        { FoodItemType.DRINK, 3.0f },
-        { FoodItemType.BURGER, 10.0f }
-    };
-
     public FoodItemType type;
-    public float cookDuration
+    public float timeCooked; // time cooked so far
+    public float cookDuration; // total time it takes to cook
+    public float burnDuration; // time in seconds after the food is fully cooked that it takes to burn it
+    public List<string> cookerTags; // list of tags of gameobjects than can cook this food item when within their trigger collider
+
+    private bool isCooking; // is being cooked
+
+    private void Update()
     {
-        get => cookDurations[type];
+        if (isCooking)
+        {
+            timeCooked += Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (cookerTags.Any(x => other.gameObject.CompareTag(x)))
+        {
+            isCooking = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (cookerTags.Any(x => other.gameObject.CompareTag(x)))
+        {
+            isCooking = false;
+        }
     }
 
     public float retailPrice
@@ -43,5 +63,15 @@ public class FoodItemScript : MonoBehaviour
     public float wholesalePrice
     {
         get => wholesalePrices[type];
+    }
+
+    public bool isBurnt
+    {
+        get => timeCooked >= burnDuration;
+    }
+
+    public bool isCooked
+    {
+        get => timeCooked > cookDuration && !isBurnt;
     }
 }
