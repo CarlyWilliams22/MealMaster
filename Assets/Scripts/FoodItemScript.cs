@@ -27,15 +27,47 @@ public class FoodItemScript : MonoBehaviour
     public float timeCooked; // time cooked so far
     public float cookDuration; // total time it takes to cook
     public float burnDuration; // time in seconds after the food is fully cooked that it takes to burn it
+    public float fireDuration; // time in seconds after food has started to burn until it catches fire
     public List<string> cookerTags; // list of tags of gameobjects than can cook this food item when within their trigger collider
+    public GameObject firePrefab;
+    public GameObject smokePrefab;
 
     private bool isCooking; // is being cooked
+    private GameObject fire;
+    private GameObject smoke;
+    private bool hasDroppedOnFloor;
+    private bool hasBeenExtinguished; // has touched the fire extinguisher chemicals
 
     private void Update()
     {
         if (isCooking)
         {
+            bool wasBurnt = isBurnt;
+            bool wasOnFire = isOnFire;
+
             timeCooked += Time.deltaTime;
+
+            if (!wasBurnt && isBurnt)
+            {
+                if (!fire)
+                {
+                    smoke = Instantiate(smokePrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
+                }
+                else
+                {
+                    smoke.SetActive(true);
+                }
+            }
+            if (!wasOnFire && isOnFire)
+            {
+                if (!fire)
+                {
+                    fire = Instantiate(firePrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
+                } else
+                {
+                    fire.SetActive(true);
+                }
+            }
         }
     }
 
@@ -55,6 +87,16 @@ public class FoodItemScript : MonoBehaviour
         }
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        // TODO
+        /**
+         * Check if these are fire extinguiser particles and if so disable smoke and fire
+         *
+         * hasBeenExtinguished = true
+         */
+    }
+
     public float retailPrice
     {
         get => retailPrices[type];
@@ -67,11 +109,22 @@ public class FoodItemScript : MonoBehaviour
 
     public bool isBurnt
     {
-        get => timeCooked >= burnDuration;
+        get => timeCooked >= cookDuration + burnDuration;
     }
 
     public bool isCooked
     {
-        get => timeCooked > cookDuration && !isBurnt;
+        get => timeCooked > cookDuration;
+    }
+
+    public bool isOnFire
+    {
+        get => timeCooked > cookDuration + burnDuration + fireDuration;
+    }
+
+    // has been burt, dropped on the floor, touched by the fire extinguisher
+    public bool isSpoiled
+    {
+        get => isBurnt || hasBeenExtinguished || hasDroppedOnFloor;
     }
 }
