@@ -12,6 +12,11 @@ public class CustomerScript : MonoBehaviour
         System.Array foodItems = FoodItemScript.FoodItemType.GetValues(typeof(FoodItemScript.FoodItemType));
         order = (FoodItemScript.FoodItemType)foodItems.GetValue(Random.Range(0, foodItems.Length));
 
-        Messenger.Broadcast(GameEvent.CUSTOMER_ENABLE, this);
+        Messenger.Broadcast(GameEvent.CUSTOMER_CHANGE_ACTIVE, this, true);
+    }
+
+    private void OnDisable()
+    {
+        Messenger.Broadcast(GameEvent.CUSTOMER_CHANGE_ACTIVE, this, false);
     }
 }

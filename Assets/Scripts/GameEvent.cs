@@ -6,5 +6,5 @@
     public const string LEVEL_COMPLETE = "LEVEL_COMPLETE"; // bool win/lose
     public const string GRAB_HOLDABLE = "GRAB_HOLDABLE"; // HoldableScript, bool grab/release
     public const string CLICK_INTERACTABLE = "CLICK_INTERACTABLE"; // InteractableScript
-    public const string CUSTOMER_ENABLE = "CUSTOMER_ENABLE"; // customer script
+    public const string CUSTOMER_CHANGE_ACTIVE = "CUSTOMER_CHANGE_ACTIVE"; // customer script. bool
 }

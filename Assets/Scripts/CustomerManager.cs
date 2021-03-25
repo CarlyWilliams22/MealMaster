@@ -58,13 +58,13 @@ public class CustomerManager : MonoBehaviour
 
     private void OnEnable() { 
         Messenger.AddListener<InteractableScript>(GameEvent.CLICK_INTERACTABLE, OnClickInteractable);
-        Messenger.AddListener<CustomerScript>(GameEvent.CUSTOMER_ENABLE, OnCustomerEnable);
+        Messenger.AddListener<CustomerScript, bool>(GameEvent.CUSTOMER_CHANGE_ACTIVE, OnCustomerChangeActive);
     }
 
     private void OnDisable()
     {
         Messenger.RemoveListener<InteractableScript>(GameEvent.CLICK_INTERACTABLE, OnClickInteractable);
-        Messenger.RemoveListener<CustomerScript>(GameEvent.CUSTOMER_ENABLE, OnCustomerEnable);
+        Messenger.RemoveListener<CustomerScript, bool>(GameEvent.CUSTOMER_CHANGE_ACTIVE, OnCustomerChangeActive);
     }
 
     private GameObject CreateThoughtBubble(CustomerScript customer)
@@ -108,12 +108,22 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
-    private void OnCustomerEnable(CustomerScript customer)
+    private void OnCustomerChangeActive(CustomerScript customer, bool active)
     {
-        if (customers.ContainsKey(customer))
+        if (active)
         {
-            Destroy(customers[customer].thoughtBubble);
+            if (customers.ContainsKey(customer))
+            {
+                Destroy(customers[customer].thoughtBubble);
+            }
+            customers[customer] = new OrderUI(CreateThoughtBubble(customer), false);
+        } else
+        {
+            if (customers.ContainsKey(customer))
+            {
+                Destroy(customers[customer].thoughtBubble);
+                customers.Remove(customer);
+            }
         }
-        customers[customer] = new OrderUI(CreateThoughtBubble(customer), false);
     }
 }
