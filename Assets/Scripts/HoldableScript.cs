@@ -11,6 +11,11 @@ public class HoldableScript : MonoBehaviour
     private bool origUseGravity;
     private bool _isHeld;
 
+    public Vector3 grabRotation;
+    public bool useGrabRotation;
+    public float releaseRotationX;
+    public bool useReleaseRotationX;
+
     /**
      * In the case of Instantiating a Holdable and then immediately grabbing it, 
      * Grab() may be called before Start(), so setup stuff needs to be done prior to that in Awake
@@ -32,7 +37,12 @@ public class HoldableScript : MonoBehaviour
             origUseGravity = rbody.useGravity;
             rbody.useGravity = false;
         }
+        if (useGrabRotation)
+        {
+            transform.localEulerAngles = grabRotation;
+        }
         _isHeld = true;
+        Messenger.Broadcast(GameEvent.GRAB_HOLDABLE, this, true);
     }
 
     public bool Release()
@@ -43,8 +53,18 @@ public class HoldableScript : MonoBehaviour
             rbody.isKinematic = origIsKinematic;
             rbody.useGravity = origUseGravity;
         }
+
+        if (useReleaseRotationX)
+        {
+            transform.localEulerAngles = new Vector3(releaseRotationX, transform.localEulerAngles.y, transform.localEulerAngles.z);
+        }
+
         // TODO can the object be released here? If not return false
         _isHeld = false;
+        if (!_isHeld)
+        {
+            Messenger.Broadcast(GameEvent.GRAB_HOLDABLE, this, false);
+        }
         return !_isHeld;
     }
 
