@@ -11,7 +11,11 @@ public class HoldableScript : MonoBehaviour
     private bool origUseGravity;
     private bool _isHeld;
 
-    private void Start()
+    /**
+     * In the case of Instantiating a Holdable and then immediately grabbing it, 
+     * Grab() may be called before Start(), so setup stuff needs to be done prior to that in Awake
+     */
+    private void Awake()
     {
         rbody = GetComponent<Rigidbody>();
     }

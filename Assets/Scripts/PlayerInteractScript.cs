@@ -94,7 +94,21 @@ public class PlayerInteractScript : MonoBehaviour
             {
                 if (highlighted)
                 {
-                    holding = highlighted.gameObject.GetComponent<HoldableScript>();
+                    if (highlighted.GetComponent<InventoryItemScript>())
+                    {
+                        InventoryItemScript inventoryItem = highlighted.GetComponent<InventoryItemScript>();
+                        if (inventoryItem.CanInstantiateItem())
+                        {
+                            holding = inventoryItem.InstantiateItem().GetComponent<HoldableScript>();
+                            UnHighlight(highlighted);
+                            highlighted = holding.GetComponent<InteractableScript>();
+                            Highlight(highlighted);
+                        }
+                    } 
+                    else
+                    {
+                        holding = highlighted.gameObject.GetComponent<HoldableScript>();
+                    }
                     if (holding)
                     {
                         Vector3 offset = holding.GetComponent<Collider>().ClosestPoint(_camera.ViewportToWorldPoint(pointerViewportPoint));
