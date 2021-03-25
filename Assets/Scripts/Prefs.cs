@@ -16,7 +16,7 @@ namespace Assets.Scripts
         // defaults
         private static float DEFAULT_MOUSE_SENSITIVITY = 0.5f; // float 0..1
         private static float DEFAULT_CASH = 0.0f;
-        private static string DEFAULT_DINER_NAME = "The Prancing Pony";
+        private static string DEFAULT_DINER_NAME = "Code Corner";
 
         /**
          * Get the int value for a key or return its default value if it does not exist
