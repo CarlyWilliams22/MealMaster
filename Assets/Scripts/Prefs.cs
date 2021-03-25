@@ -12,11 +12,13 @@ namespace Assets.Scripts
         private static string KEY_MOUSE_SENSITIVITY = "mouse_sensitivity";
         private static string KEY_CASH = "cash";
         private static string KEY_DINER_NAME = "diner_name";
+        private static string KEY_DAY_NUMBER = "day_number";
 
         // defaults
         private static float DEFAULT_MOUSE_SENSITIVITY = 0.5f; // float 0..1
         private static float DEFAULT_CASH = 0.0f;
         private static string DEFAULT_DINER_NAME = "Code Corner";
+        private static int DEFAULT_DAY_NUMBER = 1;
 
         /**
          * Get the int value for a key or return its default value if it does not exist
@@ -45,6 +47,7 @@ namespace Assets.Scripts
         static public void ClearSavedLevelData()
         {
             SetCash(DEFAULT_CASH);
+            SetDinerName(DEFAULT_DINER_NAME);
         }
 
         static public float GetMouseSensitivity()
@@ -75,6 +78,16 @@ namespace Assets.Scripts
         static public void SetDinerName(string value)
         {
             PlayerPrefs.SetString(KEY_DINER_NAME, value);
+        }
+
+        static public int GetDayNumber()
+        {
+            return GetIntOrDefault(KEY_DAY_NUMBER, DEFAULT_DAY_NUMBER);
+        }
+
+        static public void SetDayNumber(int value)
+        {
+            PlayerPrefs.SetInt(KEY_DAY_NUMBER, value);
         }
     }
 }
