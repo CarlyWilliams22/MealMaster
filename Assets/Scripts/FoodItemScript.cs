@@ -88,7 +88,7 @@ public class FoodItemScript : MonoBehaviour
         }
     }
 
-    private bool isCooking
+    public bool isCooking
     {
         get => cookingColliders.Count > 0 && !holdable.isHeld();
     }
