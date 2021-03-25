@@ -9,6 +9,7 @@ public class HoldableScript : MonoBehaviour
 
     private bool origIsKinematic;
     private bool origUseGravity;
+    private bool _isHeld;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class HoldableScript : MonoBehaviour
             origUseGravity = rbody.useGravity;
             rbody.useGravity = false;
         }
+        _isHeld = true;
     }
 
     public bool Release()
@@ -38,6 +40,12 @@ public class HoldableScript : MonoBehaviour
             rbody.useGravity = origUseGravity;
         }
         // TODO can the object be released here? If not return false
-        return true;
+        _isHeld = false;
+        return !_isHeld;
+    }
+
+    public bool isHeld()
+    {
+        return _isHeld;
     }
 }

@@ -32,11 +32,12 @@ public class FoodItemScript : MonoBehaviour
     public GameObject firePrefab;
     public GameObject smokePrefab;
 
-    private bool isCooking; // is being cooked
     private GameObject fire;
     private GameObject smoke;
     private bool hasDroppedOnFloor;
     private bool hasBeenOnFire;
+    private HashSet<Collider> cookingColliders;
+    private HoldableScript holdable;
 
     private void Start()
     {
@@ -44,6 +45,8 @@ public class FoodItemScript : MonoBehaviour
         smoke.SetActive(false);
         fire = Instantiate(firePrefab, transform.position, Quaternion.identity, transform);
         fire.SetActive(false);
+        cookingColliders = new HashSet<Collider>();
+        holdable = GetComponent<HoldableScript>();
     }
 
     private void Update()
@@ -68,7 +71,7 @@ public class FoodItemScript : MonoBehaviour
     {
         if (cookerTags.Any(x => other.gameObject.CompareTag(x)))
         {
-            isCooking = true;
+            cookingColliders.Add(other);
         }
     }
 
@@ -76,13 +79,18 @@ public class FoodItemScript : MonoBehaviour
     {
         if (cookerTags.Any(x => other.gameObject.CompareTag(x)))
         {
-            isCooking = false;
+            cookingColliders.Remove(other);
 
             if (isBurning && !isOnFire)
             {
                 smoke.SetActive(false);
             }
         }
+    }
+
+    private bool isCooking
+    {
+        get => cookingColliders.Count > 0 && !holdable.isHeld();
     }
 
     private void OnParticleCollision(GameObject other)
