@@ -7,18 +7,20 @@ using Assets.Scripts;
 public class EndOfDayManagerScript : MonoBehaviour
 {
     public GameObject MainScreen, Hiring, Restock, Upgrades;
-    public Text DayNumberText;
+    public Text DayNumberText, Cash;
+    ApplicationManagerScript application;
 
     // Start is called before the first frame update
     void Start()
     {
         DayNumberText.text = "End of Day " +  Prefs.GetDayNumber();
+        application = FindObjectOfType<ApplicationManagerScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Cash.text = Prefs.GetCash().ToString("C");
     }
 
     public void OnClickHiring()
@@ -49,7 +51,8 @@ public class EndOfDayManagerScript : MonoBehaviour
 
     public void OnClickStartNextDay()
     {
-
+        Prefs.SetDayNumber(Prefs.GetDayNumber() + 1);
+        application.OnClickPlay();
     }
 
 }
