@@ -36,37 +36,30 @@ public class FoodItemScript : MonoBehaviour
     private GameObject fire;
     private GameObject smoke;
     private bool hasDroppedOnFloor;
-    private bool hasBeenExtinguished; // has touched the fire extinguisher chemicals
+    private bool hasBeenOnFire;
+
+    private void Start()
+    {
+        smoke = Instantiate(smokePrefab, transform.position, Quaternion.identity, transform);
+        smoke.SetActive(false);
+        fire = Instantiate(firePrefab, transform.position, Quaternion.identity, transform);
+        fire.SetActive(false);
+    }
 
     private void Update()
     {
         if (isCooking)
         {
-            bool wasBurnt = isBurnt;
-            bool wasOnFire = isOnFire;
-
             timeCooked += Time.deltaTime;
 
-            if (!wasBurnt && isBurnt)
+            if (!isBurning && timeCooked >= cookDuration + burnDuration)
             {
-                if (!fire)
-                {
-                    smoke = Instantiate(smokePrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
-                }
-                else
-                {
-                    smoke.SetActive(true);
-                }
+                smoke.SetActive(true);
             }
-            if (!wasOnFire && isOnFire)
+            if (!isOnFire && timeCooked > cookDuration + burnDuration + fireDuration)
             {
-                if (!fire)
-                {
-                    fire = Instantiate(firePrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
-                } else
-                {
-                    fire.SetActive(true);
-                }
+                fire.SetActive(true);
+                hasBeenOnFire = true;
             }
         }
     }
@@ -84,6 +77,11 @@ public class FoodItemScript : MonoBehaviour
         if (cookerTags.Any(x => other.gameObject.CompareTag(x)))
         {
             isCooking = false;
+
+            if (isBurning && !isOnFire)
+            {
+                smoke.SetActive(false);
+            }
         }
     }
 
@@ -107,24 +105,18 @@ public class FoodItemScript : MonoBehaviour
         get => wholesalePrices[type];
     }
 
-    public bool isBurnt
+    public bool isBurning
     {
-        get => timeCooked >= cookDuration + burnDuration;
-    }
-
-    public bool isCooked
-    {
-        get => timeCooked > cookDuration;
+        get => smoke.activeSelf;
     }
 
     public bool isOnFire
     {
-        get => timeCooked > cookDuration + burnDuration + fireDuration;
+        get => fire.activeSelf;
     }
 
-    // has been burt, dropped on the floor, touched by the fire extinguisher
     public bool isSpoiled
     {
-        get => isBurnt || hasBeenExtinguished || hasDroppedOnFloor;
+        get => hasBeenOnFire || hasDroppedOnFloor;
     }
 }
