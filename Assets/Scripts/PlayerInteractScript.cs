@@ -30,6 +30,14 @@ public class PlayerInteractScript : MonoBehaviour
     {
         UpdateHighlighted();
         UpdateHolding();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (highlighted)
+            {
+                Messenger.Broadcast(GameEvent.CLICK_INTERACTABLE, highlighted);
+            }
+        }
     }
 
     private void UpdateHighlighted()

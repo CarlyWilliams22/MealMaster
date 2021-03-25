@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CustomerScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public FoodItemScript.FoodItemType order;
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        // pick a random item to order
+        System.Array foodItems = FoodItemScript.FoodItemType.GetValues(typeof(FoodItemScript.FoodItemType));
+        order = (FoodItemScript.FoodItemType)foodItems.GetValue(Random.Range(0, foodItems.Length));
+
+        Messenger.Broadcast(GameEvent.CUSTOMER_ENABLE, this);
     }
 }
