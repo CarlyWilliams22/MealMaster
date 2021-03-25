@@ -8,6 +8,7 @@ public class RestockInventoryScript : MonoBehaviour
 {
     public Text moneyCalcLabel;
     public Text orderAmountLabel;
+    float restockCost;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +22,15 @@ public class RestockInventoryScript : MonoBehaviour
         
     }
 
-    public void onChangeOrderAmount()
+    public void OnChangeOrderAmount()
     {
         float price = FoodItemScript.wholesalePrices[FoodItemScript.FoodItemType.BURGER];
-        moneyCalcLabel.text = "x " + price.ToString("C") + " = " + (int.Parse(orderAmountLabel.text) * price).ToString("C");
+        restockCost = int.Parse(orderAmountLabel.text) * price;
+        moneyCalcLabel.text = "x " + price.ToString("C") + " = " + restockCost.ToString("C");
+    }
+
+    public void OnClickPlaceOrder()
+    {
+        BankAccountScript.Instance.WithdrawFromAccount(restockCost);
     }
 }

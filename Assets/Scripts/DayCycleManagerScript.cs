@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 //derived from https://www.youtube.com/watch?v=h5GFoI38DOg&t=1313s, glenrhodes.com
 public class DayCycleManagerScript : MonoBehaviour
 {
-    float dayLength = 100;
+    float dayLength = 120;
+    int time = 8;
     float maxIntensity = 3f;
     float minIntensity = 0f;
     float minPoint = -.2f;
@@ -20,6 +22,7 @@ public class DayCycleManagerScript : MonoBehaviour
     void Start()
     {
         Invoke("EndDay", dayLength);
+        UpdateTimeOfDay();
     }
 
     // Update is called once per frame
@@ -37,5 +40,11 @@ public class DayCycleManagerScript : MonoBehaviour
     void EndDay()
     {
         SceneManager.LoadScene("EndOfDayScene");
+    }
+
+    public void UpdateTimeOfDay()
+    {
+        Messenger.Broadcast<int>(GameEvent.CHANGED_TIME_OF_DAY, (time++)%12 +1);
+        Invoke("UpdateTimeOfDay", 10);
     }
 }

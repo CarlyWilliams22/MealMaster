@@ -5208,6 +5208,85 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02089477, y: 0.023179729, z: 0.025015363}
   m_Center: {x: 0, y: -0.00094759103, z: 0.0022431521}
+--- !u!1 &276081305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276081306}
+  - component: {fileID: 276081308}
+  - component: {fileID: 276081307}
+  m_Layer: 5
+  m_Name: TimeOfDayText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &276081306
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276081305}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 703831661}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 276.73, y: 136}
+  m_SizeDelta: {x: 188.95428, y: 64.93363}
+  m_Pivot: {x: 0.35822767, y: 0.5}
+--- !u!114 &276081307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276081305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 50
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: time
+--- !u!222 &276081308
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276081305}
+  m_CullTransparentMesh: 0
 --- !u!1 &355095015
 GameObject:
   m_ObjectHideFlags: 0
@@ -6020,6 +6099,7 @@ RectTransform:
   - {fileID: 1369723332}
   - {fileID: 1975656835}
   - {fileID: 2021507381}
+  - {fileID: 276081306}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6042,6 +6122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cashLabel: {fileID: 1975656836}
   dayNumberLabel: {fileID: 2021507382}
+  timeOfDayLabel: {fileID: 276081307}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -7034,7 +7115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07329c5a54cc89b4e968b7d50f22bdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayRotateSpeed: {x: -1.5, y: 0, z: 0}
+  dayRotateSpeed: {x: -1.5, y: 0, z: -1.5}
   sunlightColor:
     serializedVersion: 2
     key0: {r: 0, g: 0.4051447, b: 0.4716981, a: 1}
@@ -7703,7 +7784,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 278.73, y: 192.39}
+  m_AnchoredPosition: {x: 276.73, y: 192.39}
   m_SizeDelta: {x: 188.95428, y: 64.93363}
   m_Pivot: {x: 0.35822767, y: 0.5}
 --- !u!114 &2021507382
