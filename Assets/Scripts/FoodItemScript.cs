@@ -95,12 +95,18 @@ public class FoodItemScript : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        // TODO
-        /**
-         * Check if these are fire extinguiser particles and if so disable smoke and fire
-         *
-         * hasBeenExtinguished = true
-         */
+        if (isBurning)
+        {
+            smoke.SetActive(false);
+        }
+        if (isOnFire)
+        {
+            fire.SetActive(false);
+        }
+        if (timeCooked > cookDuration)
+        {
+            timeCooked = cookDuration;
+        }
     }
 
     public float retailPrice

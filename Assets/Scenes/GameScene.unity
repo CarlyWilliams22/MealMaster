@@ -309,11 +309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabRotation: {x: 270, y: 0, z: 320}
   useGrabRotation: 1
-  grabOffset: {x: 0, y: 0, z: 0}
   releaseRotationX: 270
   useReleaseRotationX: 1
-  releaseRotationZ: 320
-  useReleaseRotationZ: 1
 --- !u!114 &176246553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203979211}
   m_LocalRotation: {x: 0, y: 0, z: 0.3420201, w: 0.9396927}
-  m_LocalPosition: {x: 0.00512, y: -0.0244, z: 0.10203}
+  m_LocalPosition: {x: 0.061, y: -0.091, z: 0.10203}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 176246556}
@@ -4052,9 +4049,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -4122,7 +4119,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4175,7 +4172,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4234,7 +4231,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
