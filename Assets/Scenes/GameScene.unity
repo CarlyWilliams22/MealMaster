@@ -7096,6 +7096,7 @@ GameObject:
   - component: {fileID: 1445007549}
   - component: {fileID: 1445007554}
   - component: {fileID: 1445007555}
+  - component: {fileID: 1445007556}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -7230,6 +7231,20 @@ MonoBehaviour:
   uiVisibilityDistance: 6
   burgerThoughtPrefab: {fileID: 153320059431656341, guid: 9aeb138bde868a74a926d44d937cac7e, type: 3}
   drinkThoughtPrefab: {fileID: 223751487935597171, guid: dff0f7f8d6c06ce4d96c47a18fc11db1, type: 3}
+--- !u!114 &1445007556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445007548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db2a8209b98504498e10106d35ce8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBalance: 0
+  balanceAtLevelStart: 0
 --- !u!1 &1498354134
 GameObject:
   m_ObjectHideFlags: 0
@@ -8336,6 +8351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerPrefab: {fileID: 4608147890443545210, guid: 426107abb84a8f04b914fb9e71e09879, type: 3}
   count: 5
+  foodType: 1
 --- !u!23 &8510380592948363076
 MeshRenderer:
   m_ObjectHideFlags: 0

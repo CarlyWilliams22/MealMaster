@@ -13,12 +13,12 @@ public class HUDScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCashLabel(0);
         UpdateDayNumberLabel();
     }
 
     private void OnEnable()
     {
+        UpdateCashLabel(Prefs.GetCash());
         Messenger.AddListener<float>(GameEvent.CHANGED_CASH, OnChangedCash);
         Messenger.AddListener<int>(GameEvent.CHANGED_TIME_OF_DAY, OnChangedTimeOfDay);
     }
@@ -31,7 +31,8 @@ public class HUDScript : MonoBehaviour
 
     private void OnChangedCash(float cash)
     {
-        UpdateCashLabel(BankAccountScript.Instance.currentBalance);
+        //UpdateCashLabel(BankAccountScript.Instance.currentBalance);
+        UpdateCashLabel(cash);
     }
 
     private void UpdateCashLabel(float cash)

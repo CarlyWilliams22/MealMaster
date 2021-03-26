@@ -12,6 +12,7 @@ public class MainMenuManagerScript : MonoBehaviour
 
     public void OnStartNewGame()
     {
+        Prefs.SetAllToDefault();
         Naming.SetActive(true);
         MenuButtons.SetActive(false);
     }

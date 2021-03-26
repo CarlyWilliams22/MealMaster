@@ -28,11 +28,16 @@ public class BankAccountScript : MonoBehaviour
         _instance = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         balanceAtLevelStart = Prefs.GetCash();
         currentBalance = balanceAtLevelStart;
-        Messenger.Broadcast(GameEvent.CHANGED_CASH, currentBalance);
+    }
+
+    private void OnDisable()
+    {
+        Prefs.SetCash(currentBalance);
+        Prefs.SetLevelProfit(currentBalance - balanceAtLevelStart);
     }
 
     public float GetProfit()

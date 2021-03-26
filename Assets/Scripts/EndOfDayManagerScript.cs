@@ -7,20 +7,30 @@ using Assets.Scripts;
 public class EndOfDayManagerScript : MonoBehaviour
 {
     public GameObject MainScreen, Hiring, Restock, Upgrades;
-    public Text DayNumberText, Cash;
-    ApplicationManagerScript application;
+    public Text DayNumberText, ProfitAndBalance;
 
     // Start is called before the first frame update
     void Start()
     {
-        DayNumberText.text = "End of Day " +  Prefs.GetDayNumber();
-        application = FindObjectOfType<ApplicationManagerScript>();
+        DayNumberText.text = "End of Day " + Prefs.GetDayNumber();
+        ProfitAndBalance.text = "Day's Profit: " + Prefs.GetLevelProfit().ToString("C") + "   Current Balance: " + Prefs.GetCash().ToString("C");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Cash.text = Prefs.GetCash().ToString("C");
+        
+    }
+
+    private void OnEnable()
+    {
+        Messenger.AddListener<float>(GameEvent.CHANGED_CASH, OnCashChange);
+    }
+
+    private void OnDisable()
+    {
+        Prefs.SetDayNumber(Prefs.GetDayNumber() + 1);
+        Messenger.RemoveListener<float>(GameEvent.CHANGED_CASH, OnCashChange);
     }
 
     public void OnClickHiring()
@@ -49,10 +59,9 @@ public class EndOfDayManagerScript : MonoBehaviour
         Upgrades.SetActive(false);
     }
 
-    public void OnClickStartNextDay()
+    private void OnCashChange(float value)
     {
-        Prefs.SetDayNumber(Prefs.GetDayNumber() + 1);
-        application.OnClickPlay();
+        ProfitAndBalance.text = "Day's Profit: " + Prefs.GetLevelProfit().ToString("C") + "   Current Balance: " + Prefs.GetCash().ToString("C");
     }
 
 }
