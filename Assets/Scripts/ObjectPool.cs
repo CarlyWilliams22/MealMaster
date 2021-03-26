@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class ObjectPool
 {
-    private GameObject prefab;
+    private GameObject[] prefab;
     private List<GameObject> pool;
     private bool canGrow;
+    int select;
 
-    public ObjectPool(GameObject prefab, int size, bool canGrow)
+    public ObjectPool(GameObject[] prefab, int size, bool canGrow)
     {
         this.prefab = prefab;
         this.canGrow = canGrow;
         pool = new List<GameObject>();
+        
 
         for (int i = 0; i < size; i++)
         {
-            GameObject temp = GameObject.Instantiate(prefab);
+            select = Random.Range(0, prefab.Length);
+            GameObject temp = GameObject.Instantiate(prefab[select]);
             temp.SetActive(false);
             pool.Add(temp);
         }
@@ -35,7 +38,8 @@ public class ObjectPool
 
         if (canGrow)
         {
-            GameObject temp = GameObject.Instantiate(prefab);
+            select = Random.Range(0, prefab.Length);
+            GameObject temp = GameObject.Instantiate(prefab[select]);
             pool.Add(temp);
             return temp;
         }
