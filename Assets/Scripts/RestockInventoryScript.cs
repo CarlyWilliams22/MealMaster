@@ -10,17 +10,14 @@ public class RestockInventoryScript : MonoBehaviour
     public Text orderAmountLabel;
     public Text currentBurgerInventory;
     public Text cash;
-    BankAccountScript bankAccount;
     float restockCost;
     int orderAmount;
 
     // Start is called before the first frame update
     void Start()
     {
-        bankAccount = BankAccountScript.Instance;
         currentBurgerInventory.text = "BURGERS: (Current Inventory: " + Prefs.GetInventoryBurger() + ")";
         cash.text = Prefs.GetCash().ToString("C");
-        print("I happen");
     }
 
     // Update is called once per frame
