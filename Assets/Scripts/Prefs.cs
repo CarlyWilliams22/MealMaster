@@ -15,6 +15,10 @@ namespace Assets.Scripts
         private static string KEY_DINER_NAME = "diner_name";
         private static string KEY_DAY_NUMBER = "day_number";
         private static string KEY_INVENTORY_BURGER = "burger_count";
+        private static string KEY_INVENTORY_BUN = "bun_count";
+        private static string KEY_INVENTORY_CUP = "cup_count";
+        private static string KEY_GAME_IN_PROGRESS = "game_in_progress"; //game is not lost
+        private static string KEY_WORKER_HIRED = "hired_worker";
 
         // defaults
         private static float DEFAULT_MOUSE_SENSITIVITY = 0.5f; // float 0..1
@@ -22,6 +26,8 @@ namespace Assets.Scripts
         private static string DEFAULT_DINER_NAME = "Code Corner";
         private static int DEFAULT_DAY_NUMBER = 1;
         private static int DEFAULT_INVENTORY_BURGER = 5;
+        private static int DEFAULT_INVENTORY_BUN = 5;
+        private static int DEFAULT_INVENTORY_CUP = 5;
 
         /**
          * Get the int value for a key or return its default value if it does not exist
@@ -113,6 +119,26 @@ namespace Assets.Scripts
             PlayerPrefs.SetInt(KEY_INVENTORY_BURGER, value);
         }
 
+        static public int GetInventoryBun()
+        {
+            return GetIntOrDefault(KEY_INVENTORY_BUN, DEFAULT_INVENTORY_BUN);
+        }
+
+        static public void SetInventoryBun(int value)
+        {
+            PlayerPrefs.SetInt(KEY_INVENTORY_BUN, value);
+        }
+
+        static public int GetInventoryCup()
+        {
+            return GetIntOrDefault(KEY_INVENTORY_CUP, DEFAULT_INVENTORY_CUP);
+        }
+
+        static public void SetInventoryCup(int value)
+        {
+            PlayerPrefs.SetInt(KEY_INVENTORY_CUP, value);
+        }
+
         static public void SetAllToDefault()
         {
             SetCash(DEFAULT_CASH);
@@ -121,6 +147,8 @@ namespace Assets.Scripts
             SetLevelProfit(DEFAULT_CASH);
             SetMouseSensitivity(DEFAULT_MOUSE_SENSITIVITY);
             SetInventoryBurger(DEFAULT_INVENTORY_BURGER);
+            SetInventoryBun(DEFAULT_INVENTORY_BUN);
+            SetInventoryCup(DEFAULT_INVENTORY_CUP);
         }
     }
 }

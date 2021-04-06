@@ -22,7 +22,10 @@ public class InventoryItemScript : MonoBehaviour
             GameObject item = Instantiate(spawnerPrefab, transform.position, Quaternion.identity);
             FoodManagerScript.Instance.AddItem(item.GetComponent<FoodItemScript>());
             count--;
-            Prefs.SetInventoryBurger(count);
+            if (foodType == FoodItemScript.FoodItemType.BURGER)
+            {
+                Prefs.SetInventoryBurger(count);
+            }
             return item;
         }
         return null;
@@ -30,23 +33,22 @@ public class InventoryItemScript : MonoBehaviour
 
     private void OnEnable()
     {
-        if (foodType == FoodItemScript.FoodItemType.BURGER) {
+        if (foodType == FoodItemScript.FoodItemType.BURGER)
+        {
             UpdateInventory(Prefs.GetInventoryBurger());
         }
-        Messenger.AddListener<int>(GameEvent.CHANGED_INVENTORY_BURGER, UpdateInventory);
-    }
-
-    private void OnDisable()
-    {
-        Messenger.RemoveListener<int>(GameEvent.CHANGED_INVENTORY_BURGER, UpdateInventory);
+        if (foodType == FoodItemScript.FoodItemType.BUN)
+        {
+            UpdateInventory(Prefs.GetInventoryBun());
+        }
+        if (foodType == FoodItemScript.FoodItemType.DRINK)
+        {
+            UpdateInventory(Prefs.GetInventoryCup());
+        }
     }
 
     public void UpdateInventory(int value)
     {
-        print(value);
-        if (foodType == FoodItemScript.FoodItemType.BURGER)
-        {
-            count = value;
-        }
+        count = value;
     }
 }

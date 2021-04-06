@@ -6,14 +6,15 @@ using System.Linq;
 public class FoodItemScript : MonoBehaviour
 {
     public enum FoodItemType {
-        DRINK, BURGER
+        DRINK, BURGER, BUN
     }
 
     // restocking prices
     public static readonly Dictionary<FoodItemType, float> wholesalePrices = new Dictionary<FoodItemType, float>
     {
         { FoodItemType.DRINK, 0.25f },
-        { FoodItemType.BURGER, 0.75f }
+        { FoodItemType.BURGER, 0.50f },
+        { FoodItemType.BUN, 0.25f }
     };
 
     // what the customer pays
@@ -114,7 +115,7 @@ public class FoodItemScript : MonoBehaviour
         get => retailPrices[type];
     }
 
-    public float wholesalePrice
+    public float WholesalePrice
     {
         get => wholesalePrices[type];
     }

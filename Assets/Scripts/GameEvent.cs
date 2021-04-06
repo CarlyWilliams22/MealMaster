@@ -8,5 +8,4 @@
     public const string CLICK_INTERACTABLE = "CLICK_INTERACTABLE"; // InteractableScript
     public const string CUSTOMER_CHANGE_ACTIVE = "CUSTOMER_CHANGE_ACTIVE"; // customer script. bool
     public const string CHANGED_TIME_OF_DAY = "CHANGED_TIME_OF_DAY"; //int
-    public const string CHANGED_INVENTORY_BURGER = "CHANGED_INVENTORY_BURGER";
 }
