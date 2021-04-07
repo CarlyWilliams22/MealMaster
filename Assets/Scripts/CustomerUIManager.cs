@@ -46,12 +46,15 @@ public class CustomerUIManager : MonoBehaviour
 
             if (orderUI.isOpen && IsInFrontOfCamera(customer.gameObject) && IsWithinVisibility(customer.gameObject))
             {
-                orderUI.thoughtBubble.gameObject.SetActive(true);
+                orderUI.thoughtBubble.SetActive(true);
                 orderUI.thoughtBubble.transform.position = _camera.WorldToScreenPoint(customer.transform.position + new Vector3(0, customer.gameObject.transform.localScale.magnitude, 0));
             }
             else
             {
-                orderUI.thoughtBubble.gameObject.SetActive(false);
+                if (orderUI.thoughtBubble)
+                {
+                    orderUI.thoughtBubble.SetActive(false);
+                }
             }
         }
     }

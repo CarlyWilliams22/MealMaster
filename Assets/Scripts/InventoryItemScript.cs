@@ -20,7 +20,15 @@ public class InventoryItemScript : MonoBehaviour
         if (CanInstantiateItem())
         {
             GameObject item = Instantiate(spawnerPrefab, transform.position, Quaternion.identity);
-            FoodManagerScript.Instance.AddItem(item.GetComponent<FoodItemScript>());
+            switch (foodType)
+            {
+                case FoodItemScript.FoodItemType.BURGER:
+                case FoodItemScript.FoodItemType.DRINK:
+                    FoodManagerScript.Instance.AddItem(item.GetComponent<FoodItemScript>());
+                    break;
+                default:
+                    break;
+            }
             count--;
             if (foodType == FoodItemScript.FoodItemType.BURGER)
             {
