@@ -40,9 +40,9 @@ public class CustomerSpawnManager : MonoBehaviour
                         break;
                     }
                 }
+                readyToSpawn = false;
+                Invoke("nextCustomer", 3);
             }
-            readyToSpawn = false;
-            Invoke("nextCustomer", 3);
         }
     }
 
