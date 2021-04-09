@@ -31,7 +31,7 @@ public class FoodItemScript : MonoBehaviour
 
     protected bool hasDroppedOnFloor;
     private HashSet<Collider> cookingColliders;
-    private HoldableScript holdable;
+    protected HoldableScript holdable;
 
     public void Start()
     {
@@ -65,11 +65,7 @@ public class FoodItemScript : MonoBehaviour
 
     public bool isCooking
     {
-        get {
-            bool b = cookingColliders.Count > 0;
-            bool c = !holdable.isHeld();
-            return b && c;
-        }
+        get => cookingColliders.Count > 0 && !holdable.isHeld();
     }
 
     public void OnParticleCollision(GameObject other)
@@ -93,5 +89,10 @@ public class FoodItemScript : MonoBehaviour
     public bool isSpoiled
     {
         get => hasDroppedOnFloor;
+    }
+
+    public bool isCooked
+    {
+        get => timeCooked >= cookDuration;
     }
 }
