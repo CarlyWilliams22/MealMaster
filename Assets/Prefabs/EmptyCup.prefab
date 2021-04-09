@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4739829323730965358}
   - component: {fileID: 4739829323730965357}
   - component: {fileID: 4739829323730965356}
+  - component: {fileID: 6403163734496018160}
   m_Layer: 8
   m_Name: EmptyCup
   m_TagString: Untagged
@@ -145,3 +146,23 @@ MonoBehaviour:
   useGrabRotation: 0
   releaseRotationX: 0
   useReleaseRotationX: 0
+--- !u!114 &6403163734496018160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739829323730965355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e0ee600d862e545943934ba9edf855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  timeCooked: 0
+  cookDuration: 4
+  burnDuration: 0
+  fireDuration: 0
+  cookerTags: []
+  firePrefab: {fileID: 0}
+  smokePrefab: {fileID: 0}

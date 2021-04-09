@@ -84,7 +84,9 @@ public class FoodManagerScript : MonoBehaviour
 
     public void AddItem(FoodItemScript item)
     {
-        foodItems.Add(item, Instantiate(cookBarPrefab, canvas.transform).GetComponent<Slider>());
+        GameObject g = Instantiate(cookBarPrefab, canvas.transform);
+        Slider s = g.GetComponent<Slider>();
+        foodItems.Add(item, s);
     }
 
     private bool IsInFrontOfCamera(GameObject obj)

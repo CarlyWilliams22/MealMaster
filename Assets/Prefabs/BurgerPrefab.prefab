@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4608147890443545200}
   - component: {fileID: 4608147890443545215}
   - component: {fileID: 4608147890443545202}
-  - component: {fileID: -5816128383492176494}
+  - component: {fileID: -7125108052656013117}
   m_Layer: 8
   m_Name: BurgerPrefab
   m_TagString: Untagged
@@ -112,6 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd69bb8f646b634fbf0cbfd9beacb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabRotation: {x: 0, y: 0, z: 0}
+  useGrabRotation: 0
+  releaseRotationX: 0
+  useReleaseRotationX: 0
 --- !u!54 &4608147890443545215
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,7 +145,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-5816128383492176494
+--- !u!114 &-7125108052656013117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,15 +154,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4608147890443545210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7e0ee600d862e545943934ba9edf855, type: 3}
+  m_Script: {fileID: 11500000, guid: ec5b3659b9818614bbc74265a5e70249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
   timeCooked: 0
   cookDuration: 5
-  burnDuration: 5
-  fireDuration: 5
   cookerTags:
   - StoveTopArea
+  burnDuration: 5
+  fireDuration: 5
   firePrefab: {fileID: 927352495317705878, guid: 0df54fb7f946a4d4dbea9b4e19840f3b, type: 3}
   smokePrefab: {fileID: 6809241460761523650, guid: ee0815a5676441446914de655d59f1e9, type: 3}
