@@ -310,7 +310,7 @@ public class EmployeeScript : MonoBehaviour
             {
                 holding.Release();
                 holding.GetComponent<InteractableScript>().interactionEnabled = true;
-                holding.transform.position = FindClosestFoodDropOff().transform.position + new Vector3(0, 0.5f, 0);
+                holding.transform.position = FindClosestFoodDropOff(targetCustomer).transform.position + new Vector3(0, 0.5f, 0);
                 holding = null;
                 targetCustomer = null;
             }
@@ -575,12 +575,12 @@ public class EmployeeScript : MonoBehaviour
         return current.transform.position;
     }
 
-    private GameObject FindClosestFoodDropOff()
+    private GameObject FindClosestFoodDropOff(CustomerScript customer)
     {
         GameObject current = foodDropOffSpots[0];
         foreach (GameObject spot in foodDropOffSpots)
         {
-            if (Vector3.Distance(transform.position, spot.transform.position) < Vector3.Distance(current.transform.position, transform.position))
+            if (Vector3.Distance(customer.transform.position, spot.transform.position) < Vector3.Distance(current.transform.position, customer.transform.position))
             {
                 current = spot;
             }
