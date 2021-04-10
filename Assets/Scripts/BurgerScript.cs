@@ -89,4 +89,9 @@ public class BurgerScript : BurnableFoodItemScript
             }
         }
     }
+
+    public new bool isReadyToServe
+    {
+        get => base.isReadyToServe && !topBun.GetComponent<FoodItemScript>().isSpoiled && !bottomBun.GetComponent<FoodItemScript>().isSpoiled;
+    }
 }

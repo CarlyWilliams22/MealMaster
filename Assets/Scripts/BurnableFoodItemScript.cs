@@ -86,6 +86,6 @@ public class BurnableFoodItemScript : FoodItemScript
 
     public new bool isSpoiled
     {
-        get => hasBeenOnFire || hasDroppedOnFloor;
+        get => hasBeenOnFire || base.isSpoiled;
     }
 }

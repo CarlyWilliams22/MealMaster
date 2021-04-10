@@ -95,4 +95,9 @@ public class FoodItemScript : MonoBehaviour
     {
         get => timeCooked >= cookDuration;
     }
+
+    public bool isReadyToServe
+    {
+        get => isCooked && !isSpoiled;
+    }
 }
