@@ -72,6 +72,7 @@ public class FoodManagerScript : MonoBehaviour
             {
                 slider.gameObject.SetActive(false);
             }
+
         }
 
         foreach (KeyValuePair<InventoryItemScript, Text> entry in inventoryItems)

@@ -12,4 +12,6 @@
     public const string AREA_TRACKER_EXIT_AREA = "AREA_TRACKER_EXIT_AREA"; // AreaManagerScript, AreaTrackerScript
     public const string CUSTOMER_LEAVE_SPOT = "CUSTOMER_LEAVE_SPOT"; // CustomerScript
     public const string FOOD_ITEM_COOKED = "FOOD_ITEM_COOKED"; // FoodItemScript
+    public const string ON_FIRE = "ON_FIRE"; //BurgerScript, BGAMScript
+    public const string OFF_FIRE = "OFF_FIRE"; //BurgerScript, BGAMScript
 }

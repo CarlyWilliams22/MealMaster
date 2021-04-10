@@ -44,7 +44,7 @@ public class InventoryItemScript : MonoBehaviour
     {
         if (foodType == FoodItemScript.FoodItemType.BURGER)
         {
-            UpdateInventory(Prefs.GetInventoryBurger());
+            UpdateInventory(/*Prefs.GetInventoryBurger()*/ 10);
         }
         if (foodType == FoodItemScript.FoodItemType.BUN)
         {

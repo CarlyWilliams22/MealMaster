@@ -9,16 +9,62 @@ public class BurgerScript : BurnableFoodItemScript
     public Vector3 topBunRotation;
     public Vector3 bottomBunRotation;
     public Vector3 bunScale;
+    public AudioClip cookingAudio, burningAudio;
 
     private GameObject topBun;
     private GameObject bottomBun;
     private AreaTrackerScript areaTracker;
+    AudioSource audioPlayer;
+    bool alarmIsPlaying, cooking, burning = false;
 
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
         areaTracker = GetComponent<AreaTrackerScript>();
+        audioPlayer = GetComponent<AudioSource>();
+    }
+
+    private new void Update()
+    {
+        base.Update();
+        if(isCooking && !cooking)
+        {
+            audioPlayer.PlayOneShot(cookingAudio);
+            cooking = true;
+        }
+        else if(!isCooking && cooking)
+        {
+            audioPlayer.Stop();
+            cooking = false;
+        }
+
+        if(!audioPlayer.isPlaying && isBurning)
+        {
+            burning = false;
+        }
+
+        if(isBurning && !burning)
+        {
+            audioPlayer.PlayOneShot(burningAudio);
+            burning = true;
+        }
+        else if(!isBurning && burning)
+        {
+            audioPlayer.Stop();
+            burning = false;
+        }
+
+        if (isOnFire && !alarmIsPlaying)
+        {
+            Messenger.Broadcast(GameEvent.ON_FIRE, GetComponent<BurnableFoodItemScript>());
+            alarmIsPlaying = true;
+        }
+        else if(!isOnFire && alarmIsPlaying)
+        {
+            Messenger.Broadcast(GameEvent.OFF_FIRE, GetComponent<BurnableFoodItemScript>());
+            alarmIsPlaying = false;
+        }
     }
 
     private void OnEnable()
@@ -94,4 +140,5 @@ public class BurgerScript : BurnableFoodItemScript
     {
         get => base.isReadyToServe && !isSpoiled && topBun && bottomBun && !topBun.GetComponent<FoodItemScript>().isSpoiled && !bottomBun.GetComponent<FoodItemScript>().isSpoiled;
     }
+
 }
