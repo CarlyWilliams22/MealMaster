@@ -24,7 +24,7 @@ public class FoodDropOffScript : MonoBehaviour
             CustomerScript customer = FindNearestCustomer();
             if (customer)
             {
-                if (customer.order == food.type)
+                if (customer.order == food.type && food.isReadyToServe)
                 {
                     food.GetComponent<InteractableScript>().interactionEnabled = false;
                     Vector3 offset = food.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
