@@ -45,7 +45,7 @@ public class RestockInventoryScript : MonoBehaviour
         if (food == FoodItemScript.FoodItemType.BUN)
         {
             price = FoodItemScript.wholesalePrices[FoodItemScript.FoodItemType.BUN];
-            orderBurgerAmount = int.Parse(orderBunAmountLabel.text);
+            orderBunAmount = int.Parse(orderBunAmountLabel.text);
             restockBunCost = orderBunAmount * price;
             bunMoneyCalcLabel.text = "x " + price.ToString("C") + " = " + restockBunCost.ToString("C");
         }

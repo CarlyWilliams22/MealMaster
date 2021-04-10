@@ -14,7 +14,7 @@ public class FoodItemScript : MonoBehaviour
     {
         { FoodItemType.DRINK, 0.25f },
         { FoodItemType.BURGER, 0.50f },
-        { FoodItemType.BUN, 0.25f }
+        { FoodItemType.BUN, 0.15f }
     };
 
     // what the customer pays
