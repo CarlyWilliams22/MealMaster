@@ -309,6 +309,7 @@ public class EmployeeScript : MonoBehaviour
             if (holding != null)
             {
                 holding.Release();
+                holding.GetComponent<InteractableScript>().interactionEnabled = true;
                 holding.transform.position = FindClosestFoodDropOff().transform.position + new Vector3(0, 0.5f, 0);
                 holding = null;
                 targetCustomer = null;
