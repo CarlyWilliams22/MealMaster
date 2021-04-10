@@ -10,4 +10,5 @@
     public const string CHANGED_TIME_OF_DAY = "CHANGED_TIME_OF_DAY"; //int
     public const string AREA_TRACKER_ENTER_AREA = "AREA_TRACKER_ENTER_AREA"; // AreaManagerScript, AreaTrackerScript
     public const string AREA_TRACKER_EXIT_AREA = "AREA_TRACKER_EXIT_AREA"; // AreaManagerScript, AreaTrackerScript
+    public const string CUSTOMER_LEAVE_SPOT = "CUSTOMER_LEAVE_SPOT"; // CustomerScript
 }

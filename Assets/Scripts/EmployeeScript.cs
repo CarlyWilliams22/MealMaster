@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-// TODO on customer leave you will need to handle targetCustomer like targetHoldable if someone else grabs the target
-
 public class EmployeeScript : MonoBehaviour
 {
     private HoldableScript holding;
@@ -22,7 +19,7 @@ public class EmployeeScript : MonoBehaviour
 
     private enum State
     {
-        Idle, FindTask, TakeHoldingToTable, TakeHoldingToSodaMachine, TakeHoldingToStove, TakeOrderFromCustomer, PrepareCustomerOrder, DeliverCustomerOrder
+        Idle, FindTask, TakeHoldingToTable, TakeHoldingToSodaMachine, TakeHoldingToStove, TakeOrderFromCustomer, PrepareCustomerOrder, DeliverCustomerOrder, PlaceHoldingOnTable
     }
 
     // Start is called before the first frame update
@@ -37,11 +34,13 @@ public class EmployeeScript : MonoBehaviour
     private void OnEnable()
     {
         Messenger.AddListener<HoldableScript, bool, GameObject>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
+        Messenger.AddListener<CustomerScript>(GameEvent.CUSTOMER_LEAVE_SPOT, OnCustomerLeaveSpot);
     }
 
     private void OnDisable()
     {
         Messenger.RemoveListener<HoldableScript, bool, GameObject>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
+        Messenger.RemoveListener<CustomerScript>(GameEvent.CUSTOMER_LEAVE_SPOT, OnCustomerLeaveSpot);
     }
 
     // Update is called once per frame
@@ -210,6 +209,21 @@ public class EmployeeScript : MonoBehaviour
                 targetHoldable = null;
                 agent.SetDestination(agent.transform.position);
                 state = State.FindTask;
+            }
+        }
+    }
+
+    private void OnCustomerLeaveSpot(CustomerScript customer)
+    {
+        if (customer == targetCustomer)
+        {
+            targetHoldable = null;
+            if (holding)
+            {
+                state = State.PlaceHoldingOnTable;
+            } else
+            {
+                state = State.Idle;
             }
         }
     }

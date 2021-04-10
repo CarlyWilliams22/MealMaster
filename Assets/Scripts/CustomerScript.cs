@@ -75,6 +75,7 @@ public class CustomerScript : MonoBehaviour
         leaving = true;
         agent.SetDestination(CustomerSpawnManager.Instance.customerDespawnPosition.transform.position);
         CustomerUIManager.Instance.SetToughtBubble(this, false);
+        Messenger.Broadcast(GameEvent.CUSTOMER_LEAVE_SPOT, this);
     }
 
     void Despawn()
