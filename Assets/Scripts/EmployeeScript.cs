@@ -113,7 +113,7 @@ public class EmployeeScript : MonoBehaviour
             {
                 if (targetCustomer)
                 {
-                    CustomerUIManager.Instance.SetToughtBubble(targetCustomer, true);
+                    CustomerUIManager.Instance.SetThoughtBubble(targetCustomer, true);
                     state = State.PrepareCustomerOrder;
                 }
             }

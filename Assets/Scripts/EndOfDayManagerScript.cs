@@ -9,12 +9,14 @@ public class EndOfDayManagerScript : MonoBehaviour
 {
     public GameObject MainScreen, Hiring, Restock, Upgrades;
     public Text DayNumberText, ProfitAndBalance, CustomerReview;
+    float employeeWage = 7.25f;
     float profit;
     string diner;
 
     // Start is called before the first frame update
     void Start()
     {
+        Prefs.SetEmployeeHired(false);
         DayNumberText.text = "End of Day " + Prefs.GetDayNumber();
         diner = Prefs.GetDinerName();
         profit = Prefs.GetLevelProfit();
@@ -88,7 +90,20 @@ public class EndOfDayManagerScript : MonoBehaviour
 
     private void OnCashChange(float value)
     {
-        ProfitAndBalance.text = "Day's Profit: " + Prefs.GetLevelProfit().ToString("C") + "   Current Balance: " + Prefs.GetCash().ToString("C");
+        ProfitAndBalance.text = "Day's Profit: " + profit.ToString("C") + "   Current Balance: " + value.ToString("C");
     }
 
+    public void OnClickHireWorker()
+    {
+        if (!Prefs.GetEmployeeHired())
+        {
+            float updatedCash = Prefs.GetCash() - employeeWage;
+            if (updatedCash >= 0)
+            {
+                Prefs.SetEmployeeHired(true);
+                Prefs.SetCash(updatedCash);
+                OnCashChange(updatedCash);
+            }
+        }
+    }
 }

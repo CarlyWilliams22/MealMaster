@@ -35,7 +35,7 @@ public class CustomerScript : MonoBehaviour
         order = (FoodItemScript.FoodItemType)foodItems.GetValue(Random.Range(0, foodItems.Length-1));
         leaving = false;
         pastFirstUpdate = false;
-        CustomerUIManager.Instance.SetToughtBubble(this, false);
+        CustomerUIManager.Instance.SetThoughtBubble(this, false);
         Messenger.Broadcast(GameEvent.CUSTOMER_CHANGE_ACTIVE, this, true);
     }
 
@@ -74,7 +74,7 @@ public class CustomerScript : MonoBehaviour
     {
         leaving = true;
         agent.SetDestination(CustomerSpawnManager.Instance.customerDespawnPosition.transform.position);
-        CustomerUIManager.Instance.SetToughtBubble(this, false);
+        CustomerUIManager.Instance.SetThoughtBubble(this, false);
         Messenger.Broadcast(GameEvent.CUSTOMER_LEAVE_SPOT, this);
     }
 

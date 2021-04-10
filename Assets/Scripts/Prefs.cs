@@ -18,7 +18,7 @@ namespace Assets.Scripts
         private static string KEY_INVENTORY_BUN = "bun_count";
         private static string KEY_INVENTORY_CUP = "cup_count";
         private static string KEY_GAME_IN_PROGRESS = "game_in_progress"; //game is not lost
-        private static string KEY_WORKER_HIRED = "hired_worker";
+        private static string KEY_EMPLOYEE_HIRED = "hired_employee";
 
         // defaults
         private static float DEFAULT_MOUSE_SENSITIVITY = 0.5f; // float 0..1
@@ -28,8 +28,8 @@ namespace Assets.Scripts
         private static int DEFAULT_INVENTORY_BURGER = 5;
         private static int DEFAULT_INVENTORY_BUN = 5;
         private static int DEFAULT_INVENTORY_CUP = 5;
-        private static string DEFAULT_GAME_IN_PROGRESS = "true";
-
+        private static bool DEFAULT_GAME_IN_PROGRESS = true;
+        private static bool DEFAULT_EMPLOYEE_HIRED = false;
 
         /**
          * Get the int value for a key or return its default value if it does not exist
@@ -55,20 +55,38 @@ namespace Assets.Scripts
             return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetString(key) : def;
         }
 
+        static private bool GetBoolOrDefault(string key, bool def)
+        {
+            return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) == 1 : def;
+
+        }
+
+        static private void SetBool(string key, bool value)
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt(key, 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt(key, 0);
+            }
+        }
+
         static public void ClearSavedLevelData()
         {
             SetCash(DEFAULT_CASH);
             SetDinerName(DEFAULT_DINER_NAME);
         }
 
-        static public string GetIsGameInProgress()
+        static public bool GetIsGameInProgress()
         {
-            return GetStringOrDefault(KEY_GAME_IN_PROGRESS, DEFAULT_GAME_IN_PROGRESS);
+            return GetBoolOrDefault(KEY_GAME_IN_PROGRESS, DEFAULT_GAME_IN_PROGRESS);
         }
 
-        static public void SetGameInProgress(string value)
+        static public void SetGameInProgress(bool value)
         {
-            PlayerPrefs.SetString(KEY_GAME_IN_PROGRESS, value);
+            SetBool(KEY_GAME_IN_PROGRESS, value);
         }
 
         static public float GetMouseSensitivity()
@@ -151,6 +169,16 @@ namespace Assets.Scripts
             PlayerPrefs.SetInt(KEY_INVENTORY_CUP, value);
         }
 
+        static public bool GetEmployeeHired()
+        {
+            return GetBoolOrDefault(KEY_EMPLOYEE_HIRED, DEFAULT_EMPLOYEE_HIRED);
+        }
+
+        static public void SetEmployeeHired(bool value)
+        {
+            SetBool(KEY_EMPLOYEE_HIRED, value);
+        }
+
         static public void SetAllToDefault()
         {
             SetCash(DEFAULT_CASH);
@@ -162,6 +190,7 @@ namespace Assets.Scripts
             SetInventoryBun(DEFAULT_INVENTORY_BUN);
             SetInventoryCup(DEFAULT_INVENTORY_CUP);
             SetGameInProgress(DEFAULT_GAME_IN_PROGRESS);
+            SetEmployeeHired(DEFAULT_EMPLOYEE_HIRED);
         }
     }
 }

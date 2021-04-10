@@ -6223,6 +6223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fb37f825ee63264b9c2600bf1a52006, type: 3}
+--- !u!1 &386519322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7478225697116208144, guid: 6fb37f825ee63264b9c2600bf1a52006, type: 3}
+  m_PrefabInstance: {fileID: 386519321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &405905195
 GameObject:
   m_ObjectHideFlags: 0
@@ -9676,6 +9681,7 @@ GameObject:
   - component: {fileID: 1445007554}
   - component: {fileID: 1445007555}
   - component: {fileID: 1445007556}
+  - component: {fileID: 1445007557}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -9695,7 +9701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07329c5a54cc89b4e968b7d50f22bdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayRotateSpeed: {x: -1.5, y: 0, z: -1.5}
+  dayRotateSpeed: {x: -1, y: 0, z: -1}
   sunlightColor:
     serializedVersion: 2
     key0: {r: 0, g: 0.4051447, b: 0.4716981, a: 1}
@@ -9824,6 +9830,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBalance: 0
   balanceAtLevelStart: 0
+--- !u!114 &1445007557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445007548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a31febca256b74f95182f1e36879b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  employee: {fileID: 386519322}
 --- !u!1001 &1453029062
 PrefabInstance:
   m_ObjectHideFlags: 0

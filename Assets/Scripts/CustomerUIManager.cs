@@ -146,7 +146,7 @@ public class CustomerUIManager : MonoBehaviour
         }
     }
 
-    public void SetToughtBubble(CustomerScript customer, bool open)
+    public void SetThoughtBubble(CustomerScript customer, bool open)
     {
         OrderUI orderUI;
         if (customers.TryGetValue(customer, out orderUI))

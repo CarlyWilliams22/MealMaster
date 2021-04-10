@@ -8,7 +8,7 @@ using Assets.Scripts;
 //derived from https://www.youtube.com/watch?v=h5GFoI38DOg&t=1313s, glenrhodes.com
 public class DayCycleManagerScript : MonoBehaviour
 {
-    float dayLength = 120;
+    float dayLength = 180;
     int time = 8;
     float maxIntensity = 3f;
     float minIntensity = 0f;
@@ -46,7 +46,8 @@ public class DayCycleManagerScript : MonoBehaviour
         }
         else
         {
-            Prefs.SetGameInProgress("false");
+            Prefs.SetGameInProgress(false);
+            print("yah");
             SceneManager.LoadScene("GameOverScene");
         }
     }
@@ -54,6 +55,6 @@ public class DayCycleManagerScript : MonoBehaviour
     public void UpdateTimeOfDay()
     {
         Messenger.Broadcast<int>(GameEvent.CHANGED_TIME_OF_DAY, (time++)%12 +1);
-        Invoke("UpdateTimeOfDay", 10);
+        Invoke("UpdateTimeOfDay", dayLength/12);
     }
 }
