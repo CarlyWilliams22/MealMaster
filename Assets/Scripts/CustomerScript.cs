@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using Assets.Scripts;
 
 public class CustomerScript : MonoBehaviour
 {
@@ -73,6 +74,7 @@ public class CustomerScript : MonoBehaviour
     public void OnReceiveOrder()
     {
         leaving = true;
+        Pay();
         agent.SetDestination(CustomerSpawnManager.Instance.customerDespawnPosition.transform.position);
         CustomerUIManager.Instance.SetThoughtBubble(this, false);
         Messenger.Broadcast(GameEvent.CUSTOMER_LEAVE_SPOT, this);
@@ -87,5 +89,14 @@ public class CustomerScript : MonoBehaviour
         }
         spot.occupier = null;
         gameObject.SetActive(false);
+    }
+
+    private void Pay()
+    {
+        float price = FoodItemScript.retailPrices[order];
+        Prefs.SetLevelProfit(Prefs.GetLevelProfit() + price);
+        float cash = Prefs.GetCash() + price;
+        Prefs.SetCash(cash);
+        Messenger.Broadcast<float>(GameEvent.CHANGED_CASH, cash);
     }
 }

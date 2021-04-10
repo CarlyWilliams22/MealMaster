@@ -16,7 +16,6 @@ public class RestockInventoryScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Prefs.SetCash(50);
         UpdatedInventoryBurger();
         UpdatedInventoryBun();
         UpdatedInventoryCup();

@@ -22,6 +22,7 @@ public class DayCycleManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Prefs.SetLevelProfit(0);
         Invoke("EndDay", dayLength);
         UpdateTimeOfDay();
     }
@@ -47,7 +48,6 @@ public class DayCycleManagerScript : MonoBehaviour
         else
         {
             Prefs.SetGameInProgress(false);
-            print("yah");
             SceneManager.LoadScene("GameOverScene");
         }
     }

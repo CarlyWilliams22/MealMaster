@@ -8,13 +8,13 @@ public class PrefsManagerScript : MonoBehaviour
     private void OnEnable()
     {
         Messenger.AddListener<float>(GameEvent.CHANGED_MOUSE_SENSITIVITY, OnChangeMouseSensitivity);
-        Messenger.AddListener<bool>(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
+     //   Messenger.AddListener<bool>(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
     }
 
     private void OnDisable()
     {
         Messenger.RemoveListener<float>(GameEvent.CHANGED_MOUSE_SENSITIVITY, OnChangeMouseSensitivity);
-        Messenger.RemoveListener<bool>(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
+     //   Messenger.RemoveListener<bool>(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
     }
 
     private void OnChangeMouseSensitivity(float value)
@@ -22,11 +22,11 @@ public class PrefsManagerScript : MonoBehaviour
         Prefs.SetMouseSensitivity(value);
     }
 
-    private void OnLevelComplete(bool win)
+   /* private void OnLevelComplete(bool win)
     {
         if (win)
         {
             Prefs.SetCash(BankAccountScript.Instance.currentBalance);
         }
-    }
+    }*/
 }

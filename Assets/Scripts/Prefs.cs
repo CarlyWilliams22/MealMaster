@@ -26,7 +26,7 @@ namespace Assets.Scripts
         private static string DEFAULT_DINER_NAME = "Code Corner";
         private static int DEFAULT_DAY_NUMBER = 1;
         private static int DEFAULT_INVENTORY_BURGER = 5;
-        private static int DEFAULT_INVENTORY_BUN = 5;
+        private static int DEFAULT_INVENTORY_BUN = 10;
         private static int DEFAULT_INVENTORY_CUP = 5;
         private static bool DEFAULT_GAME_IN_PROGRESS = true;
         private static bool DEFAULT_EMPLOYEE_HIRED = false;
