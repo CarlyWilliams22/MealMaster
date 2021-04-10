@@ -7,7 +7,7 @@ public class CustomerScript : MonoBehaviour
 {
     public FoodItemScript.FoodItemType order;
     NavMeshAgent agent;
-    Animator animation;
+    new Animator animation;
     Camera player;
 
     private void Start()
