@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 1356804268451240597}
   - component: {fileID: 1356804268451240596}
   - component: {fileID: 1356804268451240595}
+  - component: {fileID: 8707686754143983399}
   m_Layer: 8
   m_Name: BurgerBun
-  m_TagString: Untagged
+  m_TagString: BurgerBun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,13 +30,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356804268451240599}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 10.023, y: 1.401, z: 4.498}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 8.193065, z: 3.6674914}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &618389976322503780
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -145,3 +146,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &8707686754143983399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356804268451240599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4eb8b0ee91560e43944654526a54d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaTags:
+  - TableTopArea

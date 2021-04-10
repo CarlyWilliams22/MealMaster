@@ -8,6 +8,9 @@ TagManager:
   - Customer
   - SodaMachineFillArea1
   - SodaMachineFillArea2
+  - TableTopArea
+  - BurgerBun
+  - Burger
   layers:
   - Default
   - TransparentFX

@@ -43,7 +43,7 @@ public class BurnableFoodItemScript : FoodItemScript
         }
     }
 
-    private new void OnTriggerExit(Collider other)
+    public new void OnTriggerExit(Collider other)
     {
         base.OnTriggerExit(other);
 

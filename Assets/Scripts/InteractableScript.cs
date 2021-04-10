@@ -15,9 +15,15 @@ public class InteractableScript : MonoBehaviour
         preEffectScale = transform.localScale;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CancelEffects()
     {
-        
+        if (growCoroutine != null)
+        {
+            StopCoroutine(growCoroutine);
+        }
+        if (shrinkCoroutine != null)
+        {
+            StopCoroutine(shrinkCoroutine);
+        }
     }
 }

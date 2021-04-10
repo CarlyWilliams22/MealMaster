@@ -3,7 +3,9 @@ guid: ec5b3659b9818614bbc74265a5e70249
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - firePrefab: {fileID: 927352495317705878, guid: 0df54fb7f946a4d4dbea9b4e19840f3b, type: 3}
+  - smokePrefab: {fileID: 6809241460761523650, guid: ee0815a5676441446914de655d59f1e9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

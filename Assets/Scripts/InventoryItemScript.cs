@@ -19,7 +19,7 @@ public class InventoryItemScript : MonoBehaviour
     {
         if (CanInstantiateItem())
         {
-            GameObject item = Instantiate(spawnerPrefab, transform.position, Quaternion.identity);
+            GameObject item = Instantiate(spawnerPrefab, transform.position, spawnerPrefab.transform.rotation);
             switch (foodType)
             {
                 case FoodItemScript.FoodItemType.BURGER:

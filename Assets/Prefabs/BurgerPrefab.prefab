@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1349811590836743816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1858464616608212155}
+  m_Layer: 0
+  m_Name: TopBunPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1858464616608212155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349811590836743816}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 5, y: 33.333336, z: 5}
+  m_Children: []
+  m_Father: {fileID: 4608147890443545214}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4608147890443545210
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,10 +45,11 @@ GameObject:
   - component: {fileID: 4608147890443545200}
   - component: {fileID: 4608147890443545215}
   - component: {fileID: 4608147890443545202}
-  - component: {fileID: -7125108052656013117}
+  - component: {fileID: -2762432159492323681}
+  - component: {fileID: -7501688799957743}
   m_Layer: 8
   m_Name: BurgerPrefab
-  m_TagString: Untagged
+  m_TagString: Burger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +64,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.472, y: 1.216, z: -3.046}
   m_LocalScale: {x: 0.2, y: 0.03, z: 0.2}
-  m_Children: []
+  m_Children:
+  - {fileID: 1858464616608212155}
+  - {fileID: 6170128715019927762}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,7 +178,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7125108052656013117
+--- !u!114 &-2762432159492323681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,15 +187,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 4608147890443545210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5b3659b9818614bbc74265a5e70249, type: 3}
+  m_Script: {fileID: 11500000, guid: f4eb8b0ee91560e43944654526a54d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaTags:
+  - TableTopArea
+--- !u!114 &-7501688799957743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4608147890443545210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9389002090b128643929a2acd14b43ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
   timeCooked: 0
-  cookDuration: 5
+  cookDuration: 10
   cookerTags:
   - StoveTopArea
   burnDuration: 5
   fireDuration: 5
   firePrefab: {fileID: 927352495317705878, guid: 0df54fb7f946a4d4dbea9b4e19840f3b, type: 3}
   smokePrefab: {fileID: 6809241460761523650, guid: ee0815a5676441446914de655d59f1e9, type: 3}
+  topBunPosition: {fileID: 1858464616608212155}
+  bottomBunPosition: {fileID: 6170128715019927762}
+  topBunRotation: {x: 90, y: 0, z: 0}
+  bottomBunRotation: {x: 270, y: 0, z: 0}
+  bunScale: {x: 30, y: 40, z: 60}
+--- !u!1 &8927812764071037854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6170128715019927762}
+  m_Layer: 0
+  m_Name: BottomBunPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6170128715019927762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927812764071037854}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 5, y: 33.333336, z: 5}
+  m_Children: []
+  m_Father: {fileID: 4608147890443545214}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
