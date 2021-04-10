@@ -51,6 +51,7 @@ public class FoodManagerScript : MonoBehaviour
         foreach (FoodItemScript item in startingFoodItems)
         {
             AddUIItem(item);
+            AddItem(item);
         }
 
     }

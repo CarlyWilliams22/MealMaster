@@ -19,6 +19,8 @@ TagManager:
   - InventoryBun
   - InventoryBurger
   - InventoryRoomEmployeeSpot
+  - EmployeeTableSpot
+  - TableDropSpot
   layers:
   - Default
   - TransparentFX
