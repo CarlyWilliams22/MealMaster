@@ -83,7 +83,7 @@ public class BurnableFoodItemScript : FoodItemScript
         get => fire.activeSelf;
     }
 
-    public new bool isSpoiled
+    public override bool isSpoiled
     {
         get => hasBeenOnFire || base.isSpoiled;
     }

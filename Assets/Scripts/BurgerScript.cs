@@ -136,7 +136,7 @@ public class BurgerScript : BurnableFoodItemScript
         }
     }
 
-    public new bool isReadyToServe
+    public override bool isReadyToServe
     {
         get => base.isReadyToServe && !isSpoiled && topBun && bottomBun && !topBun.GetComponent<FoodItemScript>().isSpoiled && !bottomBun.GetComponent<FoodItemScript>().isSpoiled;
     }

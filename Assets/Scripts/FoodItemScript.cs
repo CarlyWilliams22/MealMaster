@@ -93,7 +93,7 @@ public class FoodItemScript : MonoBehaviour
         get => wholesalePrices[type];
     }
 
-    public bool isSpoiled
+    public virtual bool isSpoiled
     {
         get => hasDroppedOnFloor;
     }
@@ -103,7 +103,7 @@ public class FoodItemScript : MonoBehaviour
         get => timeCooked >= cookDuration;
     }
 
-    public bool isReadyToServe
+    public virtual bool isReadyToServe
     {
         get => isCooked && !isSpoiled;
     }
