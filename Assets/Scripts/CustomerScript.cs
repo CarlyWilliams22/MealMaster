@@ -22,7 +22,7 @@ public class CustomerScript : MonoBehaviour
     {
         // pick a random item to order
         System.Array foodItems = FoodItemScript.FoodItemType.GetValues(typeof(FoodItemScript.FoodItemType));
-        order = (FoodItemScript.FoodItemType)foodItems.GetValue(Random.Range(0, foodItems.Length));
+        order = (FoodItemScript.FoodItemType)foodItems.GetValue(Random.Range(0, foodItems.Length-1));
 
         Messenger.Broadcast(GameEvent.CUSTOMER_CHANGE_ACTIVE, this, true);
 
