@@ -7615,7 +7615,7 @@ Transform:
   - {fileID: 1606752905}
   - {fileID: 1427278860}
   m_Father: {fileID: 0}
-  m_RootOrder: 41
+  m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &624179510 stripped
 Transform:
@@ -10591,7 +10591,6 @@ GameObject:
   - component: {fileID: 1445007549}
   - component: {fileID: 1445007554}
   - component: {fileID: 1445007555}
-  - component: {fileID: 1445007556}
   - component: {fileID: 1445007557}
   m_Layer: 0
   m_Name: Manager
@@ -10727,18 +10726,6 @@ MonoBehaviour:
   uiVisibilityDistance: 6
   burgerThoughtPrefab: {fileID: 153320059431656341, guid: 9aeb138bde868a74a926d44d937cac7e, type: 3}
   drinkThoughtPrefab: {fileID: 223751487935597171, guid: dff0f7f8d6c06ce4d96c47a18fc11db1, type: 3}
---- !u!114 &1445007556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445007548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db2a8209b98504498e10106d35ce8ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1445007557
 MonoBehaviour:
   m_ObjectHideFlags: 0
