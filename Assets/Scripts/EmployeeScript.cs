@@ -24,13 +24,17 @@ public class EmployeeScript : MonoBehaviour
     private GameObject[] sodaMachineSodaFillSpots;
 
     private GameObject sodaFillSpot;
+    private GameObject stoveDropSpot;
 
     private InventoryItemScript inventoryDrink;
+    private InventoryItemScript inventoryBurger;
+    private InventoryItemScript inventoryBun;
     private GameObject inventoryRoomEmployeeSpot;
 
     private GameObject employeeTableSpot;
     private GameObject tableDropSpot;
-    
+    private GameObject[] stoveDropSpots;
+
 
     private enum State
     {
@@ -44,10 +48,10 @@ public class EmployeeScript : MonoBehaviour
         DeliverHoldingToCustomer, 
         GetRawDrink, // find an existing uncooked drink
         GetRawBurger,
-        GetRawBun,
         GetInventoryDrink, // get a new drink
         GetInventoryBurger,
-        GetInventoryBun
+        GetInventoryBun,
+        GetCookedBurger
     }
 
     // Start is called before the first frame update
@@ -60,9 +64,13 @@ public class EmployeeScript : MonoBehaviour
         employeeSodaMachineSpots = GameObject.FindGameObjectsWithTag("EmployeeSodaMachineSpot"); ;
         sodaMachineSodaFillSpots = GameObject.FindGameObjectsWithTag("SodaFillSpot");
         inventoryDrink = GameObject.FindGameObjectWithTag("InventoryCup").GetComponent<InventoryItemScript>();
+        inventoryBurger = GameObject.FindGameObjectWithTag("InventoryBurger").GetComponent<InventoryItemScript>();
+        inventoryBun = GameObject.FindGameObjectWithTag("InventoryBun").GetComponent<InventoryItemScript>();
         inventoryRoomEmployeeSpot = GameObject.FindGameObjectWithTag("InventoryRoomEmployeeSpot");
         employeeTableSpot = GameObject.FindGameObjectWithTag("EmployeeTableSpot");
         tableDropSpot = GameObject.FindGameObjectWithTag("TableDropSpot");
+        stoveDropSpots = GameObject.FindGameObjectsWithTag("StoveDropSpot");
+        employeeStoveSpots = GameObject.FindGameObjectsWithTag("EmployeeStoveSpot");
     }
 
     private void OnEnable()
@@ -122,6 +130,21 @@ public class EmployeeScript : MonoBehaviour
             case State.TakeHoldingToTable:
                 TakeHoldingToTable();
                 break;
+            case State.GetCookedBurger:
+                GetCookedBurger();
+                break;
+            case State.GetRawBurger:
+                GetRawBurger();
+                break;
+            case State.GetInventoryBurger:
+                GetInventoryBurger();
+                break;
+            case State.TakeHoldingToStove:
+                TakeHoldingToStove();
+                break;
+            case State.GetInventoryBun:
+                GetInventoryBun();
+                break;
             default:
                 break;
         }
@@ -144,6 +167,14 @@ public class EmployeeScript : MonoBehaviour
                 {
                     TransitionTo(State.TakeHoldingToTable);
                 }
+                break;
+            }
+            case State.TakeHoldingToStove:
+            {
+                stoveDropSpot = stoveDropSpots[Random.Range(0, stoveDropSpots.Length)];
+                Vector3 employeeSpot = StoveEployeeSpotClosestToPoint(stoveDropSpot.transform.position);
+                agent.SetDestination(employeeSpot);
+                state = State.TakeHoldingToStove;
                 break;
             }
             case State.TakeHoldingToTable:
@@ -246,7 +277,9 @@ public class EmployeeScript : MonoBehaviour
                     case FoodItemScript.FoodItemType.DRINK:
                         TransitionTo(State.GetRawDrink);
                         break;
-                    // TODO handle burgers
+                    case FoodItemScript.FoodItemType.BURGER:
+                        TransitionTo(State.GetCookedBurger);
+                        break;
                     default:
                         TransitionTo(State.FindTask);
                         break;
@@ -366,12 +399,150 @@ public class EmployeeScript : MonoBehaviour
         }
     }
 
+    private void GetCookedBurger()
+    {
+        if (!targetHoldable)
+        {
+            targetHoldable = FindCookedBurger();
+            if (targetHoldable)
+            {
+                agent.SetDestination(targetHoldable.transform.position);
+            }
+            else
+            {
+                TransitionTo(State.GetRawBurger);
+            }
+        }
+        else
+        {
+            if (agent.remainingDistance < 1)
+            {
+                targetHoldable.GetComponent<InteractableScript>().interactionEnabled = false;
+                Vector3 offset = targetHoldable.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
+                targetHoldable.Grab(grabPoint, offset);
+                holding = targetHoldable;
+                targetHoldable = null;
+                TransitionTo(State.TakeHoldingToTable);
+            }
+        }
+    }
+
+    private void GetRawBurger()
+    {
+        if (!targetHoldable)
+        {
+            targetHoldable = FindRawItem(FoodItemScript.FoodItemType.BURGER);
+            if (targetHoldable)
+            {
+                agent.SetDestination(targetHoldable.transform.position);
+            }
+            else
+            {
+                TransitionTo(State.GetInventoryBurger);
+            }
+        }
+        else
+        {
+            if (agent.remainingDistance < 1)
+            {
+                targetHoldable.GetComponent<InteractableScript>().interactionEnabled = false;
+                Vector3 offset = targetHoldable.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
+                targetHoldable.Grab(grabPoint, offset);
+                holding = targetHoldable;
+                targetHoldable = null;
+                TransitionTo(State.TakeHoldingToStove);
+            }
+        }
+    }
+
+    private void GetInventoryBurger()
+    {
+        agent.SetDestination(inventoryRoomEmployeeSpot.transform.position);
+        if (agent.remainingDistance < 1 && Vector3.Distance(inventoryRoomEmployeeSpot.transform.position, transform.position) < 1)
+        {
+            GameObject item = inventoryBurger.InstantiateItem();
+            if (item)
+            {
+                holding = item.GetComponent<HoldableScript>();
+                Vector3 offset = holding.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
+                holding.GetComponent<InteractableScript>().interactionEnabled = false;
+                holding.Grab(grabPoint, offset);
+                TransitionTo(State.TakeHoldingToStove);
+            }
+            else
+            {
+                TransitionTo(State.FindTask);
+            }
+        }
+    }
+
+    private void GetInventoryBun()
+    {
+        agent.SetDestination(inventoryRoomEmployeeSpot.transform.position);
+        if (agent.remainingDistance < 1 && Vector3.Distance(inventoryRoomEmployeeSpot.transform.position, transform.position) < 1)
+        {
+            GameObject item = inventoryBun.InstantiateItem();
+            if (item)
+            {
+                holding = item.GetComponent<HoldableScript>();
+                Vector3 offset = holding.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
+                holding.GetComponent<InteractableScript>().interactionEnabled = false;
+                holding.Grab(grabPoint, offset);
+                TransitionTo(State.TakeHoldingToTable);
+            }
+            else
+            {
+                TransitionTo(State.FindTask);
+            }
+        }
+    }
+
+    private void TakeHoldingToStove()
+    {
+        if (agent.remainingDistance < 1)
+        {
+            if (holding)
+            {
+                holding.Release();
+                holding.transform.position = new Vector3(stoveDropSpot.transform.position.x + Random.Range(-0.5f, 0.5f), stoveDropSpot.transform.position.y, stoveDropSpot.transform.position.z + Random.Range(-0.5f, 0.5f));
+                holding.GetComponent<InteractableScript>().interactionEnabled = true;
+                holding = null;
+            }
+            TransitionTo(State.GetInventoryBun);
+        }
+    }
+
+    private HoldableScript FindCookedBurger()
+    {
+        foreach (FoodItemScript item in FoodManagerScript.Instance.allFoodItems)
+        {
+            if (item.type == FoodItemScript.FoodItemType.BURGER && item.isCooked && !item.isSpoiled && !item.isReadyToServe &&!item.GetComponent<HoldableScript>().isHeld())
+            {
+                return item.GetComponent<HoldableScript>();
+            }
+        }
+        return null;
+    }
+
     private Vector3 SodaMachineEployeeSpotClosestToPoint(Vector3 point)
     {
         GameObject current = employeeSodaMachineSpots[0];
         foreach (GameObject spot in employeeSodaMachineSpots)
         {
             if (Vector3.Distance(point, spot.transform.position) < Vector3.Distance(point, current.transform.position)) {
+                current = spot;
+            }
+        }
+        return current.transform.position;
+    }
+
+    private Vector3 StoveEployeeSpotClosestToPoint(Vector3 point)
+    {
+        GameObject current = employeeStoveSpots[0];
+        foreach (GameObject spot in employeeStoveSpots)
+        {
+            if (Vector3.Distance(point, spot.transform.position) < Vector3.Distance(point, current.transform.position))
+            {
                 current = spot;
             }
         }
@@ -435,6 +606,7 @@ public class EmployeeScript : MonoBehaviour
         {
             if (item.type == type && !item.isSpoiled && !item.isReadyToServe && !item.isCooking && !item.GetComponent<HoldableScript>().isHeld())
             {
+                print(item.gameObject.name);
                 return item.GetComponent<HoldableScript>();
             }
         }

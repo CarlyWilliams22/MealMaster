@@ -21,6 +21,8 @@ TagManager:
   - InventoryRoomEmployeeSpot
   - EmployeeTableSpot
   - TableDropSpot
+  - StoveDropSpot
+  - EmployeeStoveSpot
   layers:
   - Default
   - TransparentFX

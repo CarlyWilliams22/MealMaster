@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1356804268451240596}
   - component: {fileID: 1356804268451240595}
   - component: {fileID: 8707686754143983399}
+  - component: {fileID: -234157501296652967}
   m_Layer: 8
   m_Name: BurgerBun
   m_TagString: BurgerBun
@@ -160,3 +161,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaTags:
   - TableTopArea
+--- !u!114 &-234157501296652967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356804268451240599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e0ee600d862e545943934ba9edf855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  timeCooked: 0
+  cookDuration: 0
+  cookerTags: []
