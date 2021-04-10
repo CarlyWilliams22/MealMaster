@@ -25,8 +25,24 @@ public class CustomerUIManager : MonoBehaviour
         }
     }
 
+    private static CustomerUIManager _instance = null;
+
+    public static CustomerUIManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
     private void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        _instance = this;
         customers = new Dictionary<CustomerScript, OrderUI>();
     }
 
@@ -127,6 +143,15 @@ public class CustomerUIManager : MonoBehaviour
                 Destroy(customers[customer].thoughtBubble);
                 customers.Remove(customer);
             }
+        }
+    }
+
+    public void SetToughtBubble(CustomerScript customer, bool open)
+    {
+        OrderUI orderUI;
+        if (customers.TryGetValue(customer, out orderUI))
+        {
+            customers[customer] = new OrderUI(orderUI.thoughtBubble, open);
         }
     }
 }

@@ -8,15 +8,15 @@ public class FireExtinguisherScript : MonoBehaviour
 
     private void OnEnable()
     {
-        Messenger.AddListener<HoldableScript, bool>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
+        Messenger.AddListener<HoldableScript, bool, GameObject>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
     }
 
     private void OnDisable()
     {
-        Messenger.RemoveListener<HoldableScript, bool>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
+        Messenger.RemoveListener<HoldableScript, bool, GameObject>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
     }
 
-    private void OnGrabHoldable(HoldableScript holdable, bool grabbed)
+    private void OnGrabHoldable(HoldableScript holdable, bool grabbed, GameObject holder)
     {
         if (holdable.gameObject == gameObject)
         {

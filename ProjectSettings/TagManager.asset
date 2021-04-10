@@ -11,6 +11,8 @@ TagManager:
   - TableTopArea
   - BurgerBun
   - Burger
+  - EmployeeCounterSpot
+  - FoodDropOff
   layers:
   - Default
   - TransparentFX

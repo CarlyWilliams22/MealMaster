@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class FoodManagerScript : MonoBehaviour
 {
-    private Dictionary<FoodItemScript, Slider> foodItems;
+    public HashSet<FoodItemScript> allFoodItems;
+    private Dictionary<FoodItemScript, Slider> uiFoodItems;
     private Dictionary<InventoryItemScript, Text> inventoryItems;
     private Camera _camera;
     public GameObject canvas;
@@ -35,8 +36,9 @@ public class FoodManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foodItems = new Dictionary<FoodItemScript, Slider>();
+        uiFoodItems = new Dictionary<FoodItemScript, Slider>();
         inventoryItems = new Dictionary<InventoryItemScript, Text>();
+        allFoodItems = new HashSet<FoodItemScript>();
         _camera = Camera.main;
 
         InventoryItemScript[] allInventoryItems = FindObjectsOfType<InventoryItemScript>();
@@ -45,12 +47,18 @@ public class FoodManagerScript : MonoBehaviour
             inventoryItems.Add(item, Instantiate(inventoryItemTextPrefab, canvas.transform).GetComponent<Text>());
         }
 
+        FoodItemScript[] startingFoodItems = FindObjectsOfType<FoodItemScript>();
+        foreach (FoodItemScript item in startingFoodItems)
+        {
+            AddItem(item);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (KeyValuePair<FoodItemScript, Slider> entry in foodItems) {
+        foreach (KeyValuePair<FoodItemScript, Slider> entry in uiFoodItems) {
             FoodItemScript item = entry.Key;
             Slider slider = entry.Value;
 
@@ -82,9 +90,25 @@ public class FoodManagerScript : MonoBehaviour
         }
     }
 
+    public void AddUIItem(FoodItemScript item)
+    {
+        uiFoodItems.Add(item, Instantiate(cookBarPrefab, canvas.transform).GetComponent<Slider>());
+    }
+
     public void AddItem(FoodItemScript item)
     {
-        foodItems.Add(item, Instantiate(cookBarPrefab, canvas.transform).GetComponent<Slider>());
+        allFoodItems.Add(item);
+    }
+
+    public void RemoveItem(FoodItemScript item)
+    {
+        allFoodItems.Remove(item);
+
+        Slider slider;
+        if (uiFoodItems.TryGetValue(item, out slider))
+        {
+            Destroy(slider);
+        }
     }
 
     private bool IsInFrontOfCamera(GameObject obj)

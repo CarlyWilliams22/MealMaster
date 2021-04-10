@@ -46,4 +46,9 @@ public class ObjectPool
 
         return null;
     }
+
+    public List<GameObject> objects
+    {
+        get => pool;
+    }
 }

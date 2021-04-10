@@ -92,6 +92,6 @@ public class BurgerScript : BurnableFoodItemScript
 
     public new bool isReadyToServe
     {
-        get => base.isReadyToServe && !topBun.GetComponent<FoodItemScript>().isSpoiled && !bottomBun.GetComponent<FoodItemScript>().isSpoiled;
+        get => base.isReadyToServe && topBun && bottomBun && !topBun.GetComponent<FoodItemScript>().isSpoiled && !bottomBun.GetComponent<FoodItemScript>().isSpoiled;
     }
 }

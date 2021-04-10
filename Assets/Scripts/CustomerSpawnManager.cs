@@ -7,10 +7,31 @@ public class CustomerSpawnManager : MonoBehaviour
 {
 
     public GameObject customer1, customer2, customer3, point1, point2, point3;
-    ObjectPool customerPool;
+    public ObjectPool customerPool;
     GameObject newCustomer;
-    GameObject[] spots = new GameObject[3];
+    public GameObject[] spots = new GameObject[3];
     bool readyToSpawn = true;
+    public GameObject customerDespawnPosition;
+
+    private static CustomerSpawnManager _instance = null;
+
+    public static CustomerSpawnManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        _instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +53,12 @@ public class CustomerSpawnManager : MonoBehaviour
             {
                 for (int i = 0; i < spots.Length; i++)
                 {
-                    if (spots[i].GetComponent<SpotScript>().getOpen())
+                    if (spots[i].GetComponent<SpotScript>().isOpen)
                     {
                         newCustomer.GetComponent<NavMeshAgent>().Warp(transform.position);
                         newCustomer.GetComponent<NavMeshAgent>().SetDestination(spots[i].transform.position);
-                        spots[i].GetComponent<SpotScript>().taken();
+                        spots[i].GetComponent<SpotScript>().occupier = newCustomer.GetComponent<CustomerScript>();
+                        newCustomer.GetComponent<CustomerScript>().spot = spots[i].GetComponent<SpotScript>();
                         break;
                     }
                 }

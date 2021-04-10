@@ -24,11 +24,12 @@ public class InventoryItemScript : MonoBehaviour
             {
                 case FoodItemScript.FoodItemType.BURGER:
                 case FoodItemScript.FoodItemType.DRINK:
-                    FoodManagerScript.Instance.AddItem(item.GetComponent<FoodItemScript>());
+                    FoodManagerScript.Instance.AddUIItem(item.GetComponent<FoodItemScript>());
                     break;
                 default:
                     break;
             }
+            FoodManagerScript.Instance.AddItem(item.GetComponent<FoodItemScript>());
             count--;
             if (foodType == FoodItemScript.FoodItemType.BURGER)
             {

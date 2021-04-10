@@ -5,18 +5,10 @@ using UnityEngine;
 public class SpotScript : MonoBehaviour
 {
 
-    private bool open = true;
+    public CustomerScript occupier;
 
-    public void taken()
-    {
-        open = false;
+    public bool isOpen {
+        get => occupier == null; 
     }
-
-    public void free()
-    {
-        open = true;
-    }
-
-    public bool getOpen() { return open; }
 
 }

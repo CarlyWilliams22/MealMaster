@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class CustomerScript : MonoBehaviour
 {
@@ -9,11 +10,20 @@ public class CustomerScript : MonoBehaviour
     NavMeshAgent agent;
     new Animator animation;
     Camera player;
+    bool pastFirstUpdate;
+    public GameObject grabPoint;
+    public HoldableScript holding;
+    bool leaving;
+    public SpotScript spot;
 
-    private void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animation = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
         player = Camera.main;
         
     }
@@ -23,10 +33,10 @@ public class CustomerScript : MonoBehaviour
         // pick a random item to order
         System.Array foodItems = FoodItemScript.FoodItemType.GetValues(typeof(FoodItemScript.FoodItemType));
         order = (FoodItemScript.FoodItemType)foodItems.GetValue(Random.Range(0, foodItems.Length-1));
-
+        leaving = false;
+        pastFirstUpdate = false;
+        CustomerUIManager.Instance.SetToughtBubble(this, false);
         Messenger.Broadcast(GameEvent.CUSTOMER_CHANGE_ACTIVE, this, true);
-
-
     }
 
     private void OnDisable()
@@ -47,5 +57,34 @@ public class CustomerScript : MonoBehaviour
             lookPos.y = 0;
             transform.rotation = Quaternion.LookRotation(lookPos);
         }
+        pastFirstUpdate = true;
+
+        if (leaving && agent.remainingDistance < 1)
+        {
+            Despawn();
+        }
+    }
+
+    public bool IsAtCounterSpot
+    {
+        get => gameObject.activeSelf && pastFirstUpdate && !leaving && agent.remainingDistance < 1 && CustomerSpawnManager.Instance.spots.Any(s => s.GetComponent<SpotScript>().occupier == this);
+    }
+
+    public void OnReceiveOrder()
+    {
+        leaving = true;
+        agent.SetDestination(CustomerSpawnManager.Instance.customerDespawnPosition.transform.position);
+        CustomerUIManager.Instance.SetToughtBubble(this, false);
+    }
+
+    void Despawn()
+    {
+        if (holding)
+        {
+            Destroy(holding.gameObject);
+            holding = null;
+        }
+        spot.occupier = null;
+        gameObject.SetActive(false);
     }
 }

@@ -42,11 +42,12 @@ public class HoldableScript : MonoBehaviour
             transform.localEulerAngles = grabRotation;
         }
         _isHeld = true;
-        Messenger.Broadcast(GameEvent.GRAB_HOLDABLE, this, true);
+        Messenger.Broadcast(GameEvent.GRAB_HOLDABLE, this, true, holder);
     }
 
     public bool Release()
     {
+        GameObject holder = transform.parent.gameObject;
         transform.SetParent(parent);
         if (rbody)
         {
@@ -63,7 +64,7 @@ public class HoldableScript : MonoBehaviour
         _isHeld = false;
         if (!_isHeld)
         {
-            Messenger.Broadcast(GameEvent.GRAB_HOLDABLE, this, false);
+            Messenger.Broadcast(GameEvent.GRAB_HOLDABLE, this, false, holder);
         }
         return !_isHeld;
     }

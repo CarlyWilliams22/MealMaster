@@ -22,12 +22,12 @@ public class AreaTrackerScript : MonoBehaviour
 
     private void OnEnable()
     {
-        Messenger.AddListener<HoldableScript, bool>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
+        Messenger.AddListener<HoldableScript, bool, GameObject>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
     }
 
     private void OnDisable()
     {
-        Messenger.RemoveListener<HoldableScript, bool>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
+        Messenger.RemoveListener<HoldableScript, bool, GameObject>(GameEvent.GRAB_HOLDABLE, OnGrabHoldable);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -66,7 +66,7 @@ public class AreaTrackerScript : MonoBehaviour
         return a.areas.Any(x => x.Contains(b));
     }
 
-    private void OnGrabHoldable(HoldableScript h, bool grabbed)
+    private void OnGrabHoldable(HoldableScript h, bool grabbed, GameObject holder)
     {
         if (h == holdable && !grabbed && onReleaseHoldable != null)
         {
