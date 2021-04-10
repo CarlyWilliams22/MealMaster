@@ -13,6 +13,7 @@ public class EmployeeScript : MonoBehaviour
     public GameObject grabPoint;
 
     private NavMeshAgent agent;
+    private new Animator animation;
 
     private GameObject[] employeeCounterSpots;
     private GameObject[] foodDropOffSpots;
@@ -53,7 +54,7 @@ public class EmployeeScript : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-
+        animation = GetComponent<Animator>();
         employeeCounterSpots = GameObject.FindGameObjectsWithTag("EmployeeCounterSpot");
         foodDropOffSpots = GameObject.FindGameObjectsWithTag("FoodDropOff");
         employeeSodaMachineSpots = GameObject.FindGameObjectsWithTag("EmployeeSodaMachineSpot"); ;
@@ -76,9 +77,22 @@ public class EmployeeScript : MonoBehaviour
         Messenger.RemoveListener<CustomerScript>(GameEvent.CUSTOMER_LEAVE_SPOT, OnCustomerLeaveSpot);
     }
 
+    void UpdateAnimation()
+    {
+        if (agent.remainingDistance > 0.5)
+        {
+            animation.SetBool("isMoving", true);
+        }
+        else
+        {
+            animation.SetBool("isMoving", false);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        UpdateAnimation();
         switch (state)
         {
             case State.Idle:
