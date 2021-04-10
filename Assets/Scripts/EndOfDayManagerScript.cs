@@ -3,23 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts;
+using System;
 
 public class EndOfDayManagerScript : MonoBehaviour
 {
     public GameObject MainScreen, Hiring, Restock, Upgrades;
-    public Text DayNumberText, ProfitAndBalance;
+    public Text DayNumberText, ProfitAndBalance, CustomerReview;
+    float profit;
+    string diner;
 
     // Start is called before the first frame update
     void Start()
     {
         DayNumberText.text = "End of Day " + Prefs.GetDayNumber();
-        ProfitAndBalance.text = "Day's Profit: " + Prefs.GetLevelProfit().ToString("C") + "   Current Balance: " + Prefs.GetCash().ToString("C");
-    }
+        diner = Prefs.GetDinerName();
+        profit = Prefs.GetLevelProfit();
+        ProfitAndBalance.text = "Day's Profit: " + profit.ToString("C") + "   Current Balance: " + Prefs.GetCash().ToString("C");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (profit < 1)
+        {
+            BadCustomerReview();
+        }
+        else if (profit < 4)
+        {
+            EhCustomerReview();
+        }
+        else
+        {
+            GoodCustomerReview();
+        }
     }
 
     private void OnEnable()
@@ -31,6 +43,21 @@ public class EndOfDayManagerScript : MonoBehaviour
     {
         Prefs.SetDayNumber(Prefs.GetDayNumber() + 1);
         Messenger.RemoveListener<float>(GameEvent.CHANGED_CASH, OnCashChange);
+    }
+
+    private void BadCustomerReview()
+    {
+        CustomerReview.text = "Man, " + diner + " has terrible service. Do not recommend.";
+    }
+
+    private void EhCustomerReview()
+    {
+        CustomerReview.text = "This place is decent.";
+    }
+
+    private void GoodCustomerReview()
+    {
+        CustomerReview.text = diner + " is the best restaurant I have been to in a long time! Their food is awesome!";
     }
 
     public void OnClickHiring()
