@@ -156,7 +156,7 @@ public class PlayerInteractScript : MonoBehaviour
         {
             interactable.preEffectScale = interactable.transform.localScale;
         }
-        interactable.growCoroutine = HighlightEffect(interactable, Time.time, highlightEffectDuration, interactable.transform.localScale, interactable.transform.localScale * highlightEffectScale, () => interactable.growCoroutine = null);
+        interactable.growCoroutine = HighlightEffect(interactable, Time.time, highlightEffectDuration, interactable.transform.localScale, interactable.transform.localScale * highlightEffectScale, () => interactable.growCoroutine = null, () => interactable.growCoroutine == null);
         StartCoroutine(interactable.growCoroutine);
     }
 
@@ -167,20 +167,26 @@ public class PlayerInteractScript : MonoBehaviour
             StopCoroutine(interactable.growCoroutine);
             interactable.growCoroutine = null;
         }
-        interactable.growCoroutine = HighlightEffect(interactable, Time.time, highlightEffectDuration, interactable.transform.localScale, interactable.preEffectScale, () => interactable.shrinkCoroutine = null);
-        StartCoroutine(interactable.growCoroutine);
+        if (interactable.shrinkCoroutine == null)
+        {
+            interactable.shrinkCoroutine = HighlightEffect(interactable, Time.time, highlightEffectDuration, interactable.transform.localScale, interactable.preEffectScale, () => interactable.shrinkCoroutine = null, () => interactable.shrinkCoroutine == null);
+            StartCoroutine(interactable.shrinkCoroutine);
+        }
     }
 
-    private IEnumerator HighlightEffect(InteractableScript interactable, float startTime, float duration, Vector3 originalScale, Vector3 newScale, Action onDone)
+    private IEnumerator HighlightEffect(InteractableScript interactable, float startTime, float duration, Vector3 originalScale, Vector3 newScale, Action onDone, Func<bool> isStopped)
     {
-        while (Time.time - startTime <= duration)
+        while (Time.time - startTime <= duration && !isStopped())
         {
             float lerp = (Time.time - startTime) / duration;
             Vector3 lerpScale = new Vector3(Mathf.Lerp(originalScale.x, newScale.x, lerp), Mathf.Lerp(originalScale.y, newScale.y, lerp), Mathf.Lerp(originalScale.z, newScale.z, lerp));
             interactable.gameObject.transform.localScale = lerpScale;
             yield return new WaitForEndOfFrame();
         }
-        interactable.gameObject.transform.localScale = newScale;
-        onDone();
+        if (!isStopped())
+        {
+            interactable.gameObject.transform.localScale = newScale;
+            onDone();
+        }
     }
 }

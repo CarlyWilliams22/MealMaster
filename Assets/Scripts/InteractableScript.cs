@@ -20,10 +20,12 @@ public class InteractableScript : MonoBehaviour
         if (growCoroutine != null)
         {
             StopCoroutine(growCoroutine);
+            growCoroutine = null;
         }
         if (shrinkCoroutine != null)
         {
             StopCoroutine(shrinkCoroutine);
+            shrinkCoroutine = null;
         }
     }
 }
