@@ -15,9 +15,8 @@ public class BurnableFoodItemScript : FoodItemScript
     private bool hasBeenOnFire;
 
     // Start is called before the first frame update
-    public new void Start()
+    public void Start()
     {
-        base.Start();
         smoke = Instantiate(smokePrefab, transform.position, Quaternion.identity, transform);
         smoke.SetActive(false);
         fire = Instantiate(firePrefab, transform.position, Quaternion.identity, transform);

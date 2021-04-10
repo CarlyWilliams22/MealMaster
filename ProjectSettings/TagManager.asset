@@ -13,6 +13,12 @@ TagManager:
   - Burger
   - EmployeeCounterSpot
   - FoodDropOff
+  - EmployeeSodaMachineSpot
+  - SodaFillSpot
+  - InventoryCup
+  - InventoryBun
+  - InventoryBurger
+  - InventoryRoomEmployeeSpot
   layers:
   - Default
   - TransparentFX

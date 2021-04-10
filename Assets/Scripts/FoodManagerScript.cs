@@ -109,6 +109,7 @@ public class FoodManagerScript : MonoBehaviour
         {
             Destroy(slider);
         }
+        uiFoodItems.Remove(item);
     }
 
     private bool IsInFrontOfCamera(GameObject obj)

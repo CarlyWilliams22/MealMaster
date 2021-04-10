@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class EmployeeScript : MonoBehaviour
 {
@@ -17,9 +18,32 @@ public class EmployeeScript : MonoBehaviour
     private GameObject[] foodDropOffSpots;
     private IEnumerator idleCoroutine;
 
+    private GameObject[] employeeSodaMachineSpots;
+    private GameObject[] employeeStoveSpots;
+    private GameObject[] sodaMachineSodaFillSpots;
+
+    private GameObject sodaFillSpot;
+
+    private InventoryItemScript inventoryDrink;
+    private GameObject inventoryRoomEmployeeSpot;
+    
+
     private enum State
     {
-        Idle, FindTask, TakeHoldingToTable, TakeHoldingToSodaMachine, TakeHoldingToStove, TakeOrderFromCustomer, PrepareCustomerOrder, DeliverCustomerOrder, PlaceHoldingOnTable
+        Idle, 
+        FindTask,
+        TakeHoldingToTable, 
+        TakeHoldingToSodaMachine, 
+        TakeHoldingToStove,
+        TakeOrderFromCustomer, 
+        GrabReadyToServeItem, 
+        DeliverHoldingToCustomer, 
+        GetRawDrink, // find an existing uncooked drink
+        GetRawBurger,
+        GetRawBun,
+        GetInventoryDrink, // get a new drink
+        GetInventoryBurger,
+        GetInventoryBun
     }
 
     // Start is called before the first frame update
@@ -29,6 +53,10 @@ public class EmployeeScript : MonoBehaviour
 
         employeeCounterSpots = GameObject.FindGameObjectsWithTag("EmployeeCounterSpot");
         foodDropOffSpots = GameObject.FindGameObjectsWithTag("FoodDropOff");
+        employeeSodaMachineSpots = GameObject.FindGameObjectsWithTag("EmployeeSodaMachineSpot"); ;
+        sodaMachineSodaFillSpots = GameObject.FindGameObjectsWithTag("SodaFillSpot");
+        inventoryDrink = GameObject.FindGameObjectWithTag("InventoryCup").GetComponent<InventoryItemScript>();
+        inventoryRoomEmployeeSpot = GameObject.FindGameObjectWithTag("InventoryRoomEmployeeSpot");
     }
 
     private void OnEnable()
@@ -52,19 +80,40 @@ public class EmployeeScript : MonoBehaviour
                 Idle();
                 break;
             case State.FindTask:
-                state = State.TakeOrderFromCustomer;
+                FindTask();
                 break;
             case State.TakeOrderFromCustomer:
                 TakeOrderFromCustomer();
                 break;
-            case State.PrepareCustomerOrder:
-                PrepareCustomerOrder();
+            case State.GrabReadyToServeItem:
+                GrabReadyToServeItem();
                 break;
-            case State.DeliverCustomerOrder:
-                DeliverCustomerOrder();
+            case State.DeliverHoldingToCustomer:
+                DeliverHoldingToCustomer();
+                break;
+            case State.GetRawDrink:
+                GetRawDrink();
+                break;
+            case State.GetInventoryDrink:
+                GetInventoryDrink();
+                break;
+            case State.TakeHoldingToSodaMachine:
+                TakeHoldingToSodaMachine();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void FindTask()
+    {
+        if (!targetCustomer)
+        {
+            state = State.TakeOrderFromCustomer;
+        } 
+        else
+        {
+            state = State.GrabReadyToServeItem;
         }
     }
 
@@ -72,6 +121,8 @@ public class EmployeeScript : MonoBehaviour
     {
         if (idleCoroutine == null)
         {
+            targetCustomer = null;
+            targetHoldable = null;
             idleCoroutine = IdleHelper();
             StartCoroutine(idleCoroutine);
         }
@@ -114,13 +165,13 @@ public class EmployeeScript : MonoBehaviour
                 if (targetCustomer)
                 {
                     CustomerUIManager.Instance.SetThoughtBubble(targetCustomer, true);
-                    state = State.PrepareCustomerOrder;
+                    state = State.GrabReadyToServeItem;
                 }
             }
         }
     }
 
-    private void PrepareCustomerOrder()
+    private void GrabReadyToServeItem()
     {
         if (!targetHoldable)
         {
@@ -128,6 +179,18 @@ public class EmployeeScript : MonoBehaviour
             if (targetHoldable)
             {
                 agent.SetDestination(targetHoldable.transform.position);
+            } else
+            {
+                switch (targetCustomer.order)
+                {
+                    case FoodItemScript.FoodItemType.DRINK:
+                        state = State.GetRawDrink;
+                        break;
+                    // TODO handle burgers
+                    default:
+                        state = State.FindTask;
+                        break;
+                }
             }
         }
         else
@@ -140,12 +203,12 @@ public class EmployeeScript : MonoBehaviour
                 holding = targetHoldable;
                 targetHoldable = null;
                 agent.SetDestination(FindEmployeeCounterSpotForCustomer(targetCustomer));
-                state = State.DeliverCustomerOrder;
+                state = State.DeliverHoldingToCustomer;
             }
         }
     }
 
-    private void DeliverCustomerOrder()
+    private void DeliverHoldingToCustomer()
     {
         if (agent.remainingDistance < 1)
         {
@@ -156,10 +219,117 @@ public class EmployeeScript : MonoBehaviour
                 holding.transform.position = FindClosestFoodDropOff().transform.position + new Vector3(0, 0.5f, 0);
                 holding = null;
                 targetCustomer = null;
-                state = State.Idle;
+            }
+            state = State.Idle;
+        }
+    }
+
+    private void GetRawDrink()
+    {
+        if (!targetHoldable)
+        {
+            targetHoldable = FindRawItem(FoodItemScript.FoodItemType.DRINK);
+            if (targetHoldable)
+            {
+                agent.SetDestination(targetHoldable.transform.position);
+            } else
+            {
+                state = State.GetInventoryDrink;
+            }
+        }
+        else
+        {
+            if (agent.remainingDistance < 1)
+            {
+                targetHoldable.GetComponent<InteractableScript>().interactionEnabled = false;
+                Vector3 offset = targetHoldable.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
+                targetHoldable.Grab(grabPoint, offset);
+                holding = targetHoldable;
+                targetHoldable = null;
+
+                InitTakeHoldingToSodaMachine();
             }
         }
     }
+
+    private void GetInventoryDrink()
+    {
+        /**
+         * agent.SetDestination doesn't update agent.remainingDistance on the same frame,
+         * so manually check Vector3.Distance too
+         */
+        agent.SetDestination(inventoryRoomEmployeeSpot.transform.position);
+        if (agent.remainingDistance < 1 && Vector3.Distance(inventoryRoomEmployeeSpot.transform.position, transform.position) < 1)
+        {
+            GameObject item = inventoryDrink.InstantiateItem();
+            if (item)
+            {
+                holding = item.GetComponent<HoldableScript>();
+                Vector3 offset = holding.GetComponent<Collider>().ClosestPoint(gameObject.transform.position);
+                holding.GetComponent<InteractableScript>().interactionEnabled = false;
+                holding.Grab(grabPoint, offset);
+                InitTakeHoldingToSodaMachine();
+            } 
+            else
+            {
+                state = State.FindTask;
+            }
+        }
+    }
+
+    private void InitTakeHoldingToSodaMachine()
+    {
+        sodaFillSpot = FindEmptySodaMachineDrinkFillSpot();
+        if (sodaFillSpot)
+        {
+            Vector3 employeeSpot = SodaMachineEployeeSpotClosestToPoint(sodaFillSpot.transform.position);
+            agent.SetDestination(employeeSpot);
+            state = State.TakeHoldingToSodaMachine;
+        }
+        else
+        {
+            state = State.TakeHoldingToTable;
+        }
+    }
+
+    private void TakeHoldingToSodaMachine()
+    {
+        if (agent.remainingDistance < 1)
+        {
+            if (holding && sodaFillSpot)
+            {
+                holding.Release();
+                holding.transform.position = sodaFillSpot.gameObject.transform.position;
+                holding.GetComponent<InteractableScript>().interactionEnabled = true;
+                holding = null;
+            }
+            state = State.FindTask;
+        }
+    }
+
+    private Vector3 SodaMachineEployeeSpotClosestToPoint(Vector3 point)
+    {
+        GameObject current = employeeSodaMachineSpots[0];
+        foreach (GameObject spot in employeeSodaMachineSpots)
+        {
+            if (Vector3.Distance(point, spot.transform.position) < Vector3.Distance(point, current.transform.position)) {
+                current = spot;
+            }
+        }
+        return current.transform.position;
+    }
+
+    private GameObject FindEmptySodaMachineDrinkFillSpot()
+    {
+        foreach (GameObject spot in sodaMachineSodaFillSpots)
+        {
+            if (FoodManagerScript.Instance.allFoodItems.All(item => item.type != FoodItemScript.FoodItemType.DRINK || Vector3.Distance(spot.gameObject.transform.position, item.gameObject.transform.position) > 0.5f))
+            {
+                return spot;
+            }
+        }
+        return null;
+    } 
 
     private Vector3 FindEmployeeCounterSpotForCustomer(CustomerScript customer)
     {
@@ -200,6 +370,18 @@ public class EmployeeScript : MonoBehaviour
         return null;
     }
 
+    private HoldableScript FindRawItem(FoodItemScript.FoodItemType type)
+    {
+        foreach (FoodItemScript item in FoodManagerScript.Instance.allFoodItems)
+        {
+            if (item.type == type && !item.isSpoiled && !item.isReadyToServe && !item.isCooking && !item.GetComponent<HoldableScript>().isHeld())
+            {
+                return item.GetComponent<HoldableScript>();
+            }
+        }
+        return null;
+    }
+
     private void OnGrabHoldable(HoldableScript holdable, bool grabbed, GameObject holder)
     {
         if (grabbed)
@@ -218,12 +400,13 @@ public class EmployeeScript : MonoBehaviour
         if (customer == targetCustomer)
         {
             targetHoldable = null;
+            targetCustomer = null;
             if (holding)
             {
-                state = State.PlaceHoldingOnTable;
+                state = State.TakeHoldingToTable;
             } else
             {
-                state = State.Idle;
+                state = State.FindTask;
             }
         }
     }

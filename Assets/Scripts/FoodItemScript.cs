@@ -33,7 +33,7 @@ public class FoodItemScript : MonoBehaviour
     private HashSet<Collider> cookingColliders;
     protected HoldableScript holdable;
 
-    public void Start()
+    public void Awake()
     {
         cookingColliders = new HashSet<Collider>();
         holdable = GetComponent<HoldableScript>();
