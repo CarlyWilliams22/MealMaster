@@ -43,7 +43,14 @@ public class FoodItemScript : MonoBehaviour
     {
         if (isCooking)
         {
+            bool wasCooked = isCooked;
             timeCooked += Time.deltaTime;
+            bool isNowCooked = isCooked;
+
+            if (!wasCooked && isNowCooked)
+            {
+                Messenger.Broadcast(GameEvent.FOOD_ITEM_COOKED, this);
+            }
         }
     }
 

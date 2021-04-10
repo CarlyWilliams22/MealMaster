@@ -11,4 +11,5 @@
     public const string AREA_TRACKER_ENTER_AREA = "AREA_TRACKER_ENTER_AREA"; // AreaManagerScript, AreaTrackerScript
     public const string AREA_TRACKER_EXIT_AREA = "AREA_TRACKER_EXIT_AREA"; // AreaManagerScript, AreaTrackerScript
     public const string CUSTOMER_LEAVE_SPOT = "CUSTOMER_LEAVE_SPOT"; // CustomerScript
+    public const string FOOD_ITEM_COOKED = "FOOD_ITEM_COOKED"; // FoodItemScript
 }

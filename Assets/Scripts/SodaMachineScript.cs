@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SodaMachineScript : MonoBehaviour
 {
@@ -14,6 +15,16 @@ public class SodaMachineScript : MonoBehaviour
     {
         fillArea1Drinks = new HashSet<GameObject>();
         fillArea2Drinks = new HashSet<GameObject>();
+    }
+
+    private void OnEnable()
+    {
+        Messenger.AddListener<FoodItemScript>(GameEvent.FOOD_ITEM_COOKED, OnFoodItemCooked);
+    }
+
+    private void OnDisable()
+    {
+        Messenger.RemoveListener<FoodItemScript>(GameEvent.FOOD_ITEM_COOKED, OnFoodItemCooked);
     }
 
     public void OnDrinkEnterFillArea(GameObject fillArea, GameObject drink)
@@ -46,7 +57,7 @@ public class SodaMachineScript : MonoBehaviour
 
     private void UpdateEffects()
     {
-        if (fillArea1Drinks.Count > 0) {
+        if (fillArea1Drinks.Where(item => !item.GetComponent<DrinkScript>().isCooked).ToList().Count > 0) {
             spout1Effect.Play();
         } 
         else
@@ -54,13 +65,21 @@ public class SodaMachineScript : MonoBehaviour
             spout1Effect.Stop();
         }
 
-        if (fillArea2Drinks.Count > 0)
+        if (fillArea2Drinks.Where(item => !item.GetComponent<DrinkScript>().isCooked).ToList().Count > 0)
         {
             spout2Effect.Play();
         }
         else
         {
             spout2Effect.Stop();
+        }
+    }
+
+    private void OnFoodItemCooked(FoodItemScript item)
+    {
+        if (item.type == FoodItemScript.FoodItemType.DRINK)
+        {
+            UpdateEffects();
         }
     }
 }
