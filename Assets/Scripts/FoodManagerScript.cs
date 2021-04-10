@@ -50,7 +50,7 @@ public class FoodManagerScript : MonoBehaviour
         FoodItemScript[] startingFoodItems = FindObjectsOfType<FoodItemScript>();
         foreach (FoodItemScript item in startingFoodItems)
         {
-            AddItem(item);
+            AddUIItem(item);
         }
 
     }
