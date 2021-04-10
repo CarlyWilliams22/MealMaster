@@ -28,6 +28,8 @@ namespace Assets.Scripts
         private static int DEFAULT_INVENTORY_BURGER = 5;
         private static int DEFAULT_INVENTORY_BUN = 5;
         private static int DEFAULT_INVENTORY_CUP = 5;
+        private static string DEFAULT_GAME_IN_PROGRESS = "true";
+
 
         /**
          * Get the int value for a key or return its default value if it does not exist
@@ -57,6 +59,16 @@ namespace Assets.Scripts
         {
             SetCash(DEFAULT_CASH);
             SetDinerName(DEFAULT_DINER_NAME);
+        }
+
+        static public string GetIsGameInProgress()
+        {
+            return GetStringOrDefault(KEY_GAME_IN_PROGRESS, DEFAULT_GAME_IN_PROGRESS);
+        }
+
+        static public void SetGameInProgress(string value)
+        {
+            PlayerPrefs.SetString(KEY_GAME_IN_PROGRESS, value);
         }
 
         static public float GetMouseSensitivity()
@@ -149,6 +161,7 @@ namespace Assets.Scripts
             SetInventoryBurger(DEFAULT_INVENTORY_BURGER);
             SetInventoryBun(DEFAULT_INVENTORY_BUN);
             SetInventoryCup(DEFAULT_INVENTORY_CUP);
+            SetGameInProgress(DEFAULT_GAME_IN_PROGRESS);
         }
     }
 }

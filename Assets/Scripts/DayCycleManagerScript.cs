@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Assets.Scripts;
 
 
 //derived from https://www.youtube.com/watch?v=h5GFoI38DOg&t=1313s, glenrhodes.com
@@ -39,7 +40,15 @@ public class DayCycleManagerScript : MonoBehaviour
 
     void EndDay()
     {
-        SceneManager.LoadScene("EndOfDayScene");
+        if (Prefs.GetLevelProfit() > 0)
+        {
+            SceneManager.LoadScene("EndOfDayScene");
+        }
+        else
+        {
+            Prefs.SetGameInProgress("false");
+            SceneManager.LoadScene("GameOverScene");
+        }
     }
 
     public void UpdateTimeOfDay()

@@ -6,8 +6,16 @@ using UnityEngine.UI;
 
 public class MainMenuManagerScript : MonoBehaviour
 {
-    public GameObject MenuButtons, Naming;
+    public GameObject MenuButtons, Naming, ContinueSavedGame;
     public Text DinerName;
+
+    private void Start()
+    {
+        if (Prefs.GetIsGameInProgress().Equals("false"))
+        {
+            ContinueSavedGame.SetActive(false);
+        }
+    }
 
 
     public void OnStartNewGame()
