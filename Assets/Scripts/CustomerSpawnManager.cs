@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Assets.Scripts;
 
 public class CustomerSpawnManager : MonoBehaviour
 {
@@ -67,7 +68,7 @@ public class CustomerSpawnManager : MonoBehaviour
                     }
                 }
                 readyToSpawn = false;
-                Invoke("nextCustomer", 3);
+                Invoke("nextCustomer", 28 - 25*Prefs.GetPopularityScore());
             }
         }
     }
