@@ -221,6 +221,9 @@ MonoBehaviour:
   bunScale: {x: 30, y: 40, z: 60}
   cookingAudio: {fileID: 8300000, guid: 28aa054e28b23c44f97259a24fa551c3, type: 3}
   burningAudio: {fileID: 8300000, guid: 800bbd5146a69424ba8374b97aa40594, type: 3}
+  burntMaterial: {fileID: 2100000, guid: 3ae19d9607fe1df40b2a204b63976465, type: 2}
+  cookedMaterial: {fileID: 2100000, guid: 246f07bbf648c634b8a3062aa907a83b, type: 2}
+  spoiledMaterial: {fileID: 2100000, guid: 65471e35aab2f3c4bb59405e81da022b, type: 2}
 --- !u!82 &4128104036050014804
 AudioSource:
   m_ObjectHideFlags: 0

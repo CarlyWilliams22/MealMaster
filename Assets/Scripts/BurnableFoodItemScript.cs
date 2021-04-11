@@ -12,7 +12,7 @@ public class BurnableFoodItemScript : FoodItemScript
 
     private GameObject fire;
     private GameObject smoke;
-    private bool hasBeenOnFire;
+    protected bool hasBeenOnFire;
 
     // Start is called before the first frame update
     public void Start()
@@ -24,7 +24,7 @@ public class BurnableFoodItemScript : FoodItemScript
     }
 
     // Update is called once per frame
-    public new void Update()
+    public override void Update()
     {
         base.Update();
 

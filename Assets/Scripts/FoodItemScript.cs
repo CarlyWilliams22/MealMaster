@@ -39,7 +39,7 @@ public class FoodItemScript : MonoBehaviour
         holdable = GetComponent<HoldableScript>();
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (isCooking)
         {
@@ -106,5 +106,13 @@ public class FoodItemScript : MonoBehaviour
     public virtual bool isReadyToServe
     {
         get => isCooked && !isSpoiled;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            hasDroppedOnFloor = true;
+        }
     }
 }

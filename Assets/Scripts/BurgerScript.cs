@@ -11,11 +11,20 @@ public class BurgerScript : BurnableFoodItemScript
     public Vector3 bunScale;
     public AudioClip cookingAudio, burningAudio;
 
+    public Material burntMaterial;
+    public Material cookedMaterial;
+    public Material spoiledMaterial;
+
     private GameObject topBun;
     private GameObject bottomBun;
     private AreaTrackerScript areaTracker;
     AudioSource audioPlayer;
     bool alarmIsPlaying, cooking, burning = false;
+    private MeshRenderer _renderer;
+
+    private bool wasOnFire;
+    private bool wasHasDroppedOnFloor;
+    private bool wasCooked;
 
     // Start is called before the first frame update
     new void Start()
@@ -23,12 +32,14 @@ public class BurgerScript : BurnableFoodItemScript
         base.Start();
         areaTracker = GetComponent<AreaTrackerScript>();
         audioPlayer = GetComponent<AudioSource>();
+        _renderer = GetComponent<MeshRenderer>();
     }
 
-    private new void Update()
+    public override void Update()
     {
         base.Update();
-        if(isCooking && !cooking)
+
+        if (isCooking && !cooking)
         {
             audioPlayer.PlayOneShot(cookingAudio);
             cooking = true;
@@ -65,6 +76,25 @@ public class BurgerScript : BurnableFoodItemScript
             Messenger.Broadcast(GameEvent.OFF_FIRE, GetComponent<BurnableFoodItemScript>());
             alarmIsPlaying = false;
         }
+
+        if (!wasOnFire && isOnFire)
+        {
+            _renderer.material = burntMaterial;
+        }
+        if (!wasCooked && isCooked) {
+            _renderer.material = cookedMaterial;
+        }
+        if (!wasHasDroppedOnFloor && hasDroppedOnFloor)
+        {
+            if (_renderer.material != burntMaterial)
+            {
+                _renderer.material = spoiledMaterial;
+            }
+        }
+
+        wasCooked = isCooked;
+        wasOnFire = isOnFire;
+        wasHasDroppedOnFloor = hasDroppedOnFloor;
     }
 
     private void OnEnable()

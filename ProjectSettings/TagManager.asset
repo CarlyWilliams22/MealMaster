@@ -23,6 +23,7 @@ TagManager:
   - TableDropSpot
   - StoveDropSpot
   - EmployeeStoveSpot
+  - Floor
   layers:
   - Default
   - TransparentFX

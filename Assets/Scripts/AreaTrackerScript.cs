@@ -80,6 +80,6 @@ public class AreaTrackerScript : MonoBehaviour
         {
             area.OnExit(this);
         }
-        Destroy(this);
+        enabled = false;
     }
 }
