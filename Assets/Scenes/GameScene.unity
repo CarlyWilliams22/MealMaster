@@ -9690,6 +9690,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 60}
   m_SizeDelta: {x: 160, y: 44.499664}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1273418833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1323828419109654, guid: 2e9c95f09d0a0024f8adea28cb4ed74c, type: 3}
+  m_PrefabInstance: {fileID: 378929342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1273418834
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273418833}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: b71d40797603c0e41a86e0136daef6a2, type: 3}
 --- !u!4 &1281809243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4730113067670777477, guid: 89248f7c1cbfb634699f628a5be6fced, type: 3}
@@ -12628,7 +12647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c6964aaa952d6498df988e717e1c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 3.5
   gravity: -4
 --- !u!114 &1972499352
 MonoBehaviour:

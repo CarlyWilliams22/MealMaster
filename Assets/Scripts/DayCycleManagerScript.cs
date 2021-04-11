@@ -23,6 +23,9 @@ public class DayCycleManagerScript : MonoBehaviour
     void Start()
     {
         Prefs.SetLevelProfit(0);
+        Prefs.SetLevelTips(0);
+        Prefs.SetLevelCustomerServed(0);
+        Prefs.SetCurrentScene("GameScene");
         Invoke("EndDay", dayLength);
         UpdateTimeOfDay();
     }
@@ -41,7 +44,7 @@ public class DayCycleManagerScript : MonoBehaviour
 
     void EndDay()
     {
-        if (Prefs.GetLevelProfit() > 0)
+        if (Prefs.GetLevelCustomersServed() > 0)
         {
             SceneManager.LoadScene("EndOfDayScene");
         }

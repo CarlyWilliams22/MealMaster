@@ -12,6 +12,8 @@ namespace Assets.Scripts
         private static string KEY_MOUSE_SENSITIVITY = "mouse_sensitivity";
         private static string KEY_CASH = "cash";
         private static string KEY_LEVEL_PROFIT = "level_profit";
+        private static string KEY_LEVEL_TIPS = "level_tips";
+        private static string KEY_LEVEL_CUSTOMERS_SERVED = "customers_served";
         private static string KEY_DINER_NAME = "diner_name";
         private static string KEY_DAY_NUMBER = "day_number";
         private static string KEY_INVENTORY_BURGER = "burger_count";
@@ -19,17 +21,20 @@ namespace Assets.Scripts
         private static string KEY_INVENTORY_CUP = "cup_count";
         private static string KEY_GAME_IN_PROGRESS = "game_in_progress"; //game is not lost
         private static string KEY_EMPLOYEE_HIRED = "hired_employee";
+        private static string KEY_CURRENT_SCENE = "current_scene";
 
         // defaults
         private static float DEFAULT_MOUSE_SENSITIVITY = 0.5f; // float 0..1
         private static float DEFAULT_CASH = 0.0f;
-        private static string DEFAULT_DINER_NAME = "Code Corner";
+        private static int DEFAULT_LEVEL_CUSTOMERS_SERVED = 0;
+        private static string DEFAULT_DINER_NAME = "The Prancing Pony";
         private static int DEFAULT_DAY_NUMBER = 1;
         private static int DEFAULT_INVENTORY_BURGER = 5;
         private static int DEFAULT_INVENTORY_BUN = 10;
         private static int DEFAULT_INVENTORY_CUP = 5;
         private static bool DEFAULT_GAME_IN_PROGRESS = true;
         private static bool DEFAULT_EMPLOYEE_HIRED = false;
+        private static string DEFAULT_SCENE = "GameScene";
 
         /**
          * Get the int value for a key or return its default value if it does not exist
@@ -75,8 +80,7 @@ namespace Assets.Scripts
 
         static public void ClearSavedLevelData()
         {
-            SetCash(DEFAULT_CASH);
-            SetDinerName(DEFAULT_DINER_NAME);
+            SetAllToDefault();
         }
 
         static public bool GetIsGameInProgress()
@@ -179,18 +183,50 @@ namespace Assets.Scripts
             SetBool(KEY_EMPLOYEE_HIRED, value);
         }
 
+        static public int GetLevelCustomersServed()
+        {
+            return GetIntOrDefault(KEY_LEVEL_CUSTOMERS_SERVED, DEFAULT_LEVEL_CUSTOMERS_SERVED);
+        }
+
+        static public void SetLevelCustomerServed(int value)
+        {
+            PlayerPrefs.SetInt(KEY_LEVEL_CUSTOMERS_SERVED, value);
+        }
+
+        static public float GetLevelTips()
+        {
+            return GetFloatOrDefault(KEY_LEVEL_TIPS, DEFAULT_CASH);
+        }
+
+        static public void SetLevelTips(float value)
+        {
+            PlayerPrefs.SetFloat(KEY_LEVEL_TIPS, value);
+        }
+
+        static public string GetCurrentScene()
+        {
+            return GetStringOrDefault(KEY_CURRENT_SCENE, DEFAULT_SCENE);
+        }
+
+        static public void SetCurrentScene(string value)
+        {
+            PlayerPrefs.SetString(KEY_CURRENT_SCENE, value);
+        }
+
         static public void SetAllToDefault()
         {
             SetCash(DEFAULT_CASH);
             SetDayNumber(DEFAULT_DAY_NUMBER);
             SetDinerName(DEFAULT_DINER_NAME);
             SetLevelProfit(DEFAULT_CASH);
+            SetLevelCustomerServed(DEFAULT_LEVEL_CUSTOMERS_SERVED);
             SetMouseSensitivity(DEFAULT_MOUSE_SENSITIVITY);
             SetInventoryBurger(DEFAULT_INVENTORY_BURGER);
             SetInventoryBun(DEFAULT_INVENTORY_BUN);
             SetInventoryCup(DEFAULT_INVENTORY_CUP);
             SetGameInProgress(DEFAULT_GAME_IN_PROGRESS);
             SetEmployeeHired(DEFAULT_EMPLOYEE_HIRED);
+            SetCurrentScene(DEFAULT_SCENE);
         }
     }
 }

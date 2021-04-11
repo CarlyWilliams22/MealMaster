@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManagerScript : MonoBehaviour
 {
@@ -29,5 +30,10 @@ public class MainMenuManagerScript : MonoBehaviour
     public void OnNameEntered()
     {
         Prefs.SetDinerName(DinerName.text);
+    }
+
+    public void OnContinueGame()
+    {
+        SceneManager.LoadScene(Prefs.GetCurrentScene());
     }
 }

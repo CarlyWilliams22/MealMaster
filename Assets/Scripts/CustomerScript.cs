@@ -16,11 +16,14 @@ public class CustomerScript : MonoBehaviour
     public HoldableScript holding;
     bool leaving;
     public SpotScript spot;
+    float spawnTime, timeUntilServed;
+    float tipPercent = .25f;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animation = GetComponent<Animator>();
+        
     }
 
     private void Start()
@@ -38,6 +41,7 @@ public class CustomerScript : MonoBehaviour
         pastFirstUpdate = false;
         CustomerUIManager.Instance.SetThoughtBubble(this, false);
         Messenger.Broadcast(GameEvent.CUSTOMER_CHANGE_ACTIVE, this, true);
+        spawnTime = Time.time;
     }
 
     private void OnDisable()
@@ -74,7 +78,9 @@ public class CustomerScript : MonoBehaviour
     public void OnReceiveOrder()
     {
         leaving = true;
+        timeUntilServed = Time.time - spawnTime;
         Pay();
+        Prefs.SetLevelCustomerServed(Prefs.GetLevelCustomersServed() + 1);
         agent.SetDestination(CustomerSpawnManager.Instance.customerDespawnPosition.transform.position);
         CustomerUIManager.Instance.SetThoughtBubble(this, false);
         Messenger.Broadcast(GameEvent.CUSTOMER_LEAVE_SPOT, this);
@@ -95,8 +101,11 @@ public class CustomerScript : MonoBehaviour
     {
         Messenger.Broadcast(GameEvent.MONEY_RECIVED);
         float price = FoodItemScript.retailPrices[order];
-        Prefs.SetLevelProfit(Prefs.GetLevelProfit() + price);
-        float cash = Prefs.GetCash() + price;
+        float tip = price * tipPercent * (100 - timeUntilServed) / 100;
+        Mathf.Clamp(tip, 0, .25f);
+        Prefs.SetLevelTips(Prefs.GetLevelTips() + tip);
+        Prefs.SetLevelProfit(Prefs.GetLevelProfit() + price + tip);
+        float cash = Prefs.GetCash() + price + tip;
         Prefs.SetCash(cash);
         Messenger.Broadcast<float>(GameEvent.CHANGED_CASH, cash);
     }
