@@ -18,6 +18,10 @@ public class DayCycleManagerScript : MonoBehaviour
     public Gradient sunlightColor;
     public Light sun;
 
+    private void Awake()
+    {
+        Prefs.SetDayNumber(Prefs.GetDayNumber() + 1);
+    }
 
     // Start is called before the first frame update
     void Start()

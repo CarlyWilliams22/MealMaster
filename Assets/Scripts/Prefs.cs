@@ -22,19 +22,21 @@ namespace Assets.Scripts
         private static string KEY_GAME_IN_PROGRESS = "game_in_progress"; //game is not lost
         private static string KEY_EMPLOYEE_HIRED = "hired_employee";
         private static string KEY_CURRENT_SCENE = "current_scene";
+        private static string KEY_POPULARITY_SCORE = "popularity_score";
 
         // defaults
         private static float DEFAULT_MOUSE_SENSITIVITY = 0.5f; // float 0..1
         private static float DEFAULT_CASH = 0.0f;
         private static int DEFAULT_LEVEL_CUSTOMERS_SERVED = 0;
         private static string DEFAULT_DINER_NAME = "The Prancing Pony";
-        private static int DEFAULT_DAY_NUMBER = 1;
+        private static int DEFAULT_DAY_NUMBER = 0;
         private static int DEFAULT_INVENTORY_BURGER = 5;
         private static int DEFAULT_INVENTORY_BUN = 10;
         private static int DEFAULT_INVENTORY_CUP = 5;
         private static bool DEFAULT_GAME_IN_PROGRESS = true;
         private static bool DEFAULT_EMPLOYEE_HIRED = false;
         private static string DEFAULT_SCENE = "GameScene";
+        private static float DEFAULT_POPULARITY_SCORE = 0;
 
         /**
          * Get the int value for a key or return its default value if it does not exist
@@ -211,6 +213,16 @@ namespace Assets.Scripts
         static public void SetCurrentScene(string value)
         {
             PlayerPrefs.SetString(KEY_CURRENT_SCENE, value);
+        }
+
+        static public float GetPopularityScore()
+        {
+            return GetFloatOrDefault(KEY_POPULARITY_SCORE, DEFAULT_POPULARITY_SCORE);
+        }
+
+        static public void SetPopularityScore(float value)
+        {
+            PlayerPrefs.SetFloat(KEY_POPULARITY_SCORE, value);
         }
 
         static public void SetAllToDefault()

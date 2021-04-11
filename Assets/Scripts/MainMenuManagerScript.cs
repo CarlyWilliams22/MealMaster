@@ -33,6 +33,9 @@ public class MainMenuManagerScript : MonoBehaviour
 
     public void OnContinueGame()
     {
+        if (Prefs.GetCurrentScene().Equals("GameScene")){
+            Prefs.SetDayNumber(Prefs.GetDayNumber() - 1);
+        }
         SceneManager.LoadScene(Prefs.GetCurrentScene());
     }
 }

@@ -10,7 +10,7 @@ public class EndOfDayManagerScript : MonoBehaviour
     public GameObject MainScreen, Hiring, Restock, Upgrades;
     public Text DayNumberText, ProfitAndBalance, CustomerReview;
     float employeeWage = 7.25f;
-    float profit, tips;
+    float profit, tips, popularity;
     string diner;
     int numCustomers;
 
@@ -26,12 +26,14 @@ public class EndOfDayManagerScript : MonoBehaviour
         numCustomers = Prefs.GetLevelCustomersServed();
         ProfitAndBalance.text = "Day's Profit: " + profit.ToString("C") + "   Current Balance: " + Prefs.GetCash().ToString("C");
 
+        popularity = 4* tips / numCustomers;
+        
         print(tips / numCustomers);
-        if (profit < 3)
+        if (popularity < .15)
         {
             BadCustomerReview();
         }
-        else if (profit < 5)
+        else if (popularity < .4)
         {
             EhCustomerReview();
         }
@@ -39,6 +41,8 @@ public class EndOfDayManagerScript : MonoBehaviour
         {
             GoodCustomerReview();
         }
+        Mathf.Clamp(popularity, 0, 1);
+        Prefs.SetPopularityScore(popularity);
     }
 
     private void OnEnable()
@@ -48,7 +52,7 @@ public class EndOfDayManagerScript : MonoBehaviour
 
     private void OnDisable()
     {
-        Prefs.SetDayNumber(Prefs.GetDayNumber() + 1);
+        
         Messenger.RemoveListener<float>(GameEvent.CHANGED_CASH, OnCashChange);
     }
 
