@@ -137,7 +137,7 @@ public class BurgerScript : BurnableFoodItemScript
 
     private void AddBun(GameObject bun)
     {
-        if (isCooked && !isSpoiled)
+        if (isCooked && !isSpoiled && !hasBeenOnFire)
         {
             bool added = false;
             if (!bottomBun)
