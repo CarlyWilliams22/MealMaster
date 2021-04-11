@@ -1135,8 +1135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5200c585b87be744b78df5f24b97f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alarm: {fileID: 0}
-  bgMusic: {fileID: 0}
+  alarm: {fileID: 8300000, guid: b1ae9ad687b90bc41b9bc4309d5b7064, type: 3}
+  bgMusic: {fileID: 8300000, guid: f6cac550fe976ad45ba4524327f35d50, type: 3}
 --- !u!4 &200534405
 Transform:
   m_ObjectHideFlags: 0
