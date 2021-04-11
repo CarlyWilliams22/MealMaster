@@ -86,7 +86,7 @@ public class BurgerScript : BurnableFoodItemScript
         }
         if (!wasHasDroppedOnFloor && hasDroppedOnFloor)
         {
-            if (_renderer.material != burntMaterial)
+            if (!hasBeenOnFire)
             {
                 _renderer.material = spoiledMaterial;
             }
