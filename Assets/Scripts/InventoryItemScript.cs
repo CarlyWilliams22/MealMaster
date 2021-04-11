@@ -35,6 +35,14 @@ public class InventoryItemScript : MonoBehaviour
             {
                 Prefs.SetInventoryBurger(count);
             }
+            if (foodType == FoodItemScript.FoodItemType.BUN)
+            {
+                Prefs.SetInventoryBun(count);
+            }
+            if (foodType == FoodItemScript.FoodItemType.DRINK)
+            {
+                Prefs.SetInventoryCup(count);
+            }
             return item;
         }
         return null;
