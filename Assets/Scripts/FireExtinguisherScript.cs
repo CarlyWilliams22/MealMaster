@@ -21,15 +21,15 @@ public class FireExtinguisherScript : MonoBehaviour
         if (holdable.gameObject == gameObject)
         {
             water.SetActive(grabbed);
+            if (grabbed)
+            {
+                GetComponent<AudioSource>().Play();
+            }
+            else
+            {
+                GetComponent<AudioSource>().Pause();
+            }
         }
 
-        if (grabbed)
-        {
-            GetComponent<AudioSource>().Play();
-        }
-        else
-        {
-            GetComponent<AudioSource>().Pause();
-        }
     }
 }

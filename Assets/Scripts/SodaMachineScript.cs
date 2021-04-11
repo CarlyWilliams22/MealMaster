@@ -7,14 +7,33 @@ public class SodaMachineScript : MonoBehaviour
 {
     public ParticleSystem spout1Effect;
     public ParticleSystem spout2Effect;
+    public AudioClip pour;
 
     private HashSet<GameObject> fillArea1Drinks;
     private HashSet<GameObject> fillArea2Drinks;
+
+    AudioSource audioPlayer;
 
     private void Start()
     {
         fillArea1Drinks = new HashSet<GameObject>();
         fillArea2Drinks = new HashSet<GameObject>();
+        audioPlayer = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if (spout1Effect.isPlaying || spout2Effect.isPlaying)
+        {
+            if (!audioPlayer.isPlaying)
+            {
+                audioPlayer.PlayOneShot(pour);
+            }
+        }
+        else if( spout1Effect.isStopped && spout2Effect.isStopped)
+        {
+            audioPlayer.Stop();
+        }
     }
 
     private void OnEnable()
