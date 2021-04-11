@@ -81,7 +81,7 @@ public class BurgerScript : BurnableFoodItemScript
         {
             _renderer.material = burntMaterial;
         }
-        if (!wasCooked && isCooked) {
+        if (!wasCooked && isCooked && !hasDroppedOnFloor) {
             _renderer.material = cookedMaterial;
         }
         if (!wasHasDroppedOnFloor && hasDroppedOnFloor)
