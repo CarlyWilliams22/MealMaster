@@ -12,7 +12,6 @@ public class MainMenuManagerScript : MonoBehaviour
 
     private void Start()
     {
-        print(Prefs.GetIsGameInProgress());
         if (!Prefs.GetIsGameInProgress())
         {
             ContinueSavedGame.SetActive(false);
