@@ -7214,6 +7214,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enterBell: {fileID: 8300000, guid: 46ba990c9bc6cb443a374bf1cd526570, type: 3}
+  moneySound: {fileID: 8300000, guid: bb601894d137e6245ba81a088a51214f, type: 3}
   customerDespawnPosition: {fileID: 555605531}
 --- !u!82 &508260089
 AudioSource:

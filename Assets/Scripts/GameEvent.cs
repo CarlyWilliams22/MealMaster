@@ -14,4 +14,5 @@
     public const string FOOD_ITEM_COOKED = "FOOD_ITEM_COOKED"; // FoodItemScript
     public const string ON_FIRE = "ON_FIRE"; //BurgerScript, BGAMScript
     public const string OFF_FIRE = "OFF_FIRE"; //BurgerScript, BGAMScript
+    public const string MONEY_RECIVED = "MONEY_RECIVED"; // CustomerScript, CustomerSpawnManager
 }

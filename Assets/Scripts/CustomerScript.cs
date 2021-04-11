@@ -93,6 +93,7 @@ public class CustomerScript : MonoBehaviour
 
     private void Pay()
     {
+        Messenger.Broadcast(GameEvent.MONEY_RECIVED);
         float price = FoodItemScript.retailPrices[order];
         Prefs.SetLevelProfit(Prefs.GetLevelProfit() + price);
         float cash = Prefs.GetCash() + price;

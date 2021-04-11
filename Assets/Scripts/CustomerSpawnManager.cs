@@ -10,7 +10,7 @@ public class CustomerSpawnManager : MonoBehaviour
     public ObjectPool customerPool;
     GameObject newCustomer;
     public GameObject[] spots = new GameObject[3];
-    public AudioClip enterBell;
+    public AudioClip enterBell, moneySound;
     bool readyToSpawn = true;
     public GameObject customerDespawnPosition;
     AudioSource audioPlayer;
@@ -72,6 +72,16 @@ public class CustomerSpawnManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        Messenger.AddListener(GameEvent.MONEY_RECIVED, MoneySound);
+    }
+
+    private void OnDisable()
+    {
+        Messenger.RemoveListener(GameEvent.MONEY_RECIVED, MoneySound);
+    }
+
     void nextCustomer()
     {
         readyToSpawn = true;
@@ -80,5 +90,10 @@ public class CustomerSpawnManager : MonoBehaviour
     void EnterDiner()
     {
         audioPlayer.PlayOneShot(enterBell);
+    }
+
+    void MoneySound()
+    {
+        audioPlayer.PlayOneShot(moneySound);
     }
 }
