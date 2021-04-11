@@ -33,9 +33,12 @@ public class AreaManagerScript : MonoBehaviour
     {
         foreach (AreaTrackerScript item in items)
         {
-            if (item.gameObject.tag == tag && condition(item.gameObject))
+            if (item != null)
             {
-                return item.gameObject;
+                if (item.gameObject.tag == tag && condition(item.gameObject))
+                {
+                    return item.gameObject;
+                }
             }
         }
         return null;
