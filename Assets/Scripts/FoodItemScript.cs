@@ -60,6 +60,13 @@ public class FoodItemScript : MonoBehaviour
         {
             cookingColliders.Add(other);
         }
+        if (other.gameObject.tag == "GarbageCanArea")
+        {
+            InteractableScript interactable = GetComponent<InteractableScript>();
+            interactable.interactionEnabled = false;
+            interactable.CancelEffects();
+            Destroy(gameObject);
+        }
     }
 
     public void OnTriggerExit(Collider other)

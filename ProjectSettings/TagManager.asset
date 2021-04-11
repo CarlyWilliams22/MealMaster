@@ -24,6 +24,7 @@ TagManager:
   - StoveDropSpot
   - EmployeeStoveSpot
   - Floor
+  - GarbageCanArea
   layers:
   - Default
   - TransparentFX
