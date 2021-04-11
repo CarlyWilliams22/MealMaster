@@ -239,6 +239,7 @@ namespace Assets.Scripts
             SetGameInProgress(DEFAULT_GAME_IN_PROGRESS);
             SetEmployeeHired(DEFAULT_EMPLOYEE_HIRED);
             SetCurrentScene(DEFAULT_SCENE);
+            SetPopularityScore(DEFAULT_POPULARITY_SCORE);
         }
     }
 }
