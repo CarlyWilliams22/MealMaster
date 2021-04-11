@@ -28,7 +28,6 @@ public class EndOfDayManagerScript : MonoBehaviour
 
         popularity = 4* tips / numCustomers;
         
-        print(tips / numCustomers);
         if (popularity < .15)
         {
             BadCustomerReview();
