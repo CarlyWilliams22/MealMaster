@@ -10,8 +10,10 @@ public class CustomerSpawnManager : MonoBehaviour
     public ObjectPool customerPool;
     GameObject newCustomer;
     public GameObject[] spots = new GameObject[3];
+    public AudioClip enterBell;
     bool readyToSpawn = true;
     public GameObject customerDespawnPosition;
+    AudioSource audioPlayer;
 
     private static CustomerSpawnManager _instance = null;
 
@@ -36,6 +38,7 @@ public class CustomerSpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioPlayer = GetComponent<AudioSource>();
         GameObject[] prefabs = { customer1, customer2, customer3};
         customerPool = new ObjectPool(prefabs, 3, false);
         spots[0] = point1;
@@ -51,6 +54,7 @@ public class CustomerSpawnManager : MonoBehaviour
             newCustomer = customerPool.GetObject();
             if (newCustomer)
             {
+                Invoke("EnterDiner", 2);
                 for (int i = 0; i < spots.Length; i++)
                 {
                     if (spots[i].GetComponent<SpotScript>().isOpen)
@@ -71,5 +75,10 @@ public class CustomerSpawnManager : MonoBehaviour
     void nextCustomer()
     {
         readyToSpawn = true;
+    }
+
+    void EnterDiner()
+    {
+        audioPlayer.PlayOneShot(enterBell);
     }
 }
