@@ -120,7 +120,13 @@ public class BurgerScript : BurnableFoodItemScript
             }
             else if (item.gameObject == gameObject) // burger entered the area
             {
+                // try to put two buns on the burger
                 GameObject bun = area.GetItem("BurgerBun", (GameObject b) => !item.gameObject.transform.parent || item.gameObject.transform.parent.tag != "Burger"); // try to get a bun on the table
+                if (bun)
+                {
+                    AddBun(bun);
+                }
+                bun = area.GetItem("BurgerBun", (GameObject b) => !item.gameObject.transform.parent || item.gameObject.transform.parent.tag != "Burger"); // try to get a bun on the table
                 if (bun)
                 {
                     AddBun(bun);
